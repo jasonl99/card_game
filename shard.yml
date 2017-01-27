@@ -8,7 +8,7 @@ dependencies:
   faker:
     github: askn/faker
   lattice-core:
-    path: /home/jason/crystal/lattice-core
+    github: jasonl99/lattice-core
 
 targets:
   card_game:
