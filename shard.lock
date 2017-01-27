@@ -1,0 +1,38 @@
+version: 1.0
+shards:
+  baked_file_system:
+    github: schovi/baked_file_system
+    version: 0.9.2
+
+  faker:
+    github: askn/faker
+    version: 0.2.0
+
+  kemal:
+    github: kemalcr/kemal
+    version: 0.17.5
+
+  kemal-session:
+    github: kemalcr/kemal-session
+    commit: 7920e17db9ac7949d2f56fa5549149c0120a4d8c
+
+  kilt:
+    github: jeromegn/kilt
+    version: 0.3.3
+
+  lattice-core:
+    path: /home/jason/crystal/lattice-core
+    version: 0.1.0
+
+  multipart:
+    github: RX14/multipart.cr
+    version: 0.1.2
+
+  radix:
+    github: luislavena/radix
+    version: 0.3.6
+
+  slang:
+    github: jeromegn/slang
+    version: 1.4.1
+

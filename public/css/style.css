@@ -1,0 +1,34 @@
+body {
+  position: relative;
+}
+div#update > * {
+  font-family: monospace;
+  font-size: 24px;
+  width: 100%;
+}
+
+div#hand {
+  display: flex;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  font-family: monospace;
+  flex-direction: row;
+}
+div#deck-stats {
+  font-family: monospace;
+}
+button.card {
+  text-align: center;
+  vertical-align: middle;
+	height: 50px;
+	width: 150px;
+  margin: 10px;
+  padding: 15px;
+	background-color: lightgray;
+}
+button.card:hover{
+  outline: 1px solid darkgray;
+  background-color: white;
+}

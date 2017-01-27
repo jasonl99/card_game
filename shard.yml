@@ -1,0 +1,19 @@
+name: card_game
+version: 0.1.0
+
+authors:
+  - Jason Landry <jasonl99@gmail.com>
+
+dependencies:
+  faker:
+    github: askn/faker
+  lattice-core:
+    path: /home/jason/crystal/lattice-core
+
+targets:
+  card_game:
+    main: src/card_game.cr
+
+crystal: 0.20.5
+
+license: MIT
