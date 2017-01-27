@@ -1,14 +1,18 @@
 # card_game
 
-TODO: Write a description here
+Shows how lattice-core uses websockets to maintain state between server and client
+
 
 ## Installation
 
-TODO: Write installation instructions here
+clone this repo and run `shards install` 
 
 ## Usage
 
-TODO: Write usage instructions here
+run the app with `crystal src/card_game.cr`
+open a browser and go to `localhost:3000/cardgame/abc`
+where `abc` becomes a new game at that address.  
+Use chrome & firefox at the same url to show two different sessions accessing a game.
 
 ## Development
 
