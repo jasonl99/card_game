@@ -1,12 +1,9 @@
-div id=dom_id data-connect=""
+div id=dom_id data-version=version
   div#hand
-    button.card#card1
-      | card 1
-    button.card#card2
-      | card 2
-    button.card#card3
-      | card 3
-    button.card#card4
-      | card 4
-    button.card#card5
-      | card 5
+    - hand.each_with_index do |card,idx|
+      button.card id="#{dom_id}-card-#{idx}"
+        = card 
+  div#stats
+    | Cards Remaining in deck: 
+    span id="#{dom_id}-cards-remaining"
+      = deck.size

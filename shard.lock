@@ -21,8 +21,8 @@ shards:
     version: 0.3.3
 
   lattice-core:
-    github: jasonl99/lattice-core
-    commit: 6683c491eb390353a1016596a9c744c523b30330
+    path: /home/jason/crystal/lattice-core
+    version: 0.1.0
 
   multipart:
     github: RX14/multipart.cr

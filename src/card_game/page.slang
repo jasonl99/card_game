@@ -8,3 +8,5 @@ html
   body
     h1 Hi #{name}
     == card_game.content
+    hr
+    == card_game2.content
