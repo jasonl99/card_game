@@ -1,3 +1,4 @@
+require "./chat_room"
 module CardGame
   class CardGame < Lattice::Connected::WebObject
     VALUES = %w(2 3 4 5 6 7 8 9 10 Jack Queen King Ace)
@@ -7,6 +8,7 @@ module CardGame
     property deck : Array(String) = new_deck
     property hand = [] of String
     property version
+    property chat_room = ChatRoom.new(name: dom_id)
 
     def content
       render "./src/card_game/card_game.slang"
@@ -33,6 +35,7 @@ module CardGame
           # update({"id"=>clicked_id, "value"=>hand[card]})
           update_attribute({"id"=>clicked_id, "attribute"=>"src", "value"=>card_image hand[card]})
           update({"id"=>"#{dom_id}-cards-remaining", "value"=>deck.size})
+          chat_room.send ChatMessage.new(name: player_name, time: Time.now, mesg: hand[card])
         end
       end
     end
