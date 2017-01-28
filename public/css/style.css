@@ -1,6 +1,35 @@
 body {
   position: relative;
 }
+
+span.card-holder {
+  display: inline-block;
+  border-radius: 3px;
+  margin: 8px;
+  /* padding: 1px; */
+  border: 1px solid gray;
+  background-color: #f4f4f4;
+}
+img.card {
+  margin:5px;
+  max-width: 70px;
+  max-height: 100px;
+  width: auto;
+  height: auto;
+}
+
+div#stats > .game-name {
+  display: inline-block;
+  font-family: monospace;
+  text-align: center;
+  font-size: 14px;
+  font-style: bold;
+  width: 150px;
+  color: white;
+  margin: 5px
+  padding: 4px;
+  background: rgba(128,128,255,0.75);
+}
 div#update > * {
   font-family: monospace;
   font-size: 24px;
