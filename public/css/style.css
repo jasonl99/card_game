@@ -10,6 +10,80 @@ span.card-holder {
   border: 1px solid gray;
   background-color: #f4f4f4;
 }
+
+.chat-room div.message-holder {
+  overflow-y: scroll;
+  height: 125px;
+}
+.chat-room {
+  position: relative;
+  font-family: Andale Mono, monospace;
+  border: 1px solid silver;
+  margin-top: 15px;
+  box-sizing: border-box;
+}
+
+.chat-room span {
+  padding: 2px 5px;
+  display: inline block;
+  height: 1.2em;
+  vertical-align: middle;
+  text-overflow: wrap;
+}
+
+.chat-room span.user {
+  background-color: #fafafa;
+  border-right: 1px solid gray;
+  width: 100px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chat-room span.time {
+  background-color: #f8f8f8;
+  border-right: 1px solid gray;
+}
+
+.chat-form {
+	position: relative;
+	margin-top 2em;
+}
+.chat-form .button-wrapper {
+	position: absolute;
+	width: 75;
+	bottom: 0px;
+	height: 1.5em;
+	border-top: 1px solid lightgray;
+}
+
+.chat-room form input[type="button"] {
+	width: 100%;
+	color: white;
+	background: darkgray;
+	border: 0;
+	height: 100%;
+}
+.chat-form .input-wrapper {
+	position: absolute;
+	left: 75px;
+	right: 0px;
+	bottom: 0px;
+	padding-left: 10px;
+	height: 1.5em;
+	/* background-color: yellow; */
+	border-top: 1px solid lightgray;
+
+}
+*:focus {outline: none;}
+
+.chat-room form input[type="text"] {
+	height: 100%;
+	width: 100%;
+	border: none;
+}
+
+
 img.card {
   margin:5px;
   max-width: 70px;
@@ -30,6 +104,7 @@ div#stats > .game-name {
   padding: 4px;
   background: rgba(128,128,255,0.75);
 }
+
 div#update > * {
   font-family: monospace;
   font-size: 24px;

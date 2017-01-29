@@ -1,7 +1,7 @@
 div.chat-message
   span.name
-    #{name} 
+    = name
   span.time
-    #{time} 
+    = time.to_s("%I:%M:%S %p")
   span.msg
-    #{msg}
+    = mesg

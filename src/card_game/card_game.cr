@@ -9,6 +9,7 @@ module CardGame
     property hand = [] of String
     property version
     property chat_room = ChatRoom.new(name: dom_id)
+    #TODO need to auto-subscribe game subscribers to chatroom
 
     def content
       render "./src/card_game/card_game.slang"
@@ -17,12 +18,17 @@ module CardGame
     def initialize(@name)
       (1..5).each {|c| hand << draw_card}
       super
+      chat_room.subscribers = subscribers
     end
 
     def card_image(card)
       "/images/#{card.gsub(" ","_").downcase}.png"
     end
 
+    # def subscribe(subscriber)
+    #   chat_room.subscribe(subscriber)
+    #   super
+    # end
 
     # action comes in the form of dom=>param
     def subscriber_action(action : Hash(String,JSON::Type), session_id : String)
