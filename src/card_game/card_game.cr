@@ -19,7 +19,7 @@ module CardGame
     def initialize(@name)
       (1..5).each {|c| hand << draw_card}
       super
-      chat_room.subscribers = subscribers
+      # chat_room.subscribers = subscribers
     end
 
     def card_image(card)
@@ -39,6 +39,10 @@ module CardGame
         update({"id"=>"#{dom_id}-cards-remaining", "value"=>deck.size})
         chat_room.send ChatMessage.new(name: player_name, time: Time.now, mesg: hand[card])
       end
+    end
+
+    def subscribed( session_id, socket)
+      chat_room.subscribe(socket)  ##
     end
 
     def draw_card
