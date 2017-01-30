@@ -11,20 +11,10 @@ module CardGame
     property chat_room = ChatRoom.new(name: dom_id)
     #TODO need to auto-subscribe game subscribers to chatroom
 
-    # trying to figure out how to render a game for a particular user.
-    # so the input text show the name of the user being rendered for.
-    def content(session_id : String?)
-      if session_id
-        puts "about to render cardgame for this session: #{session_id}".colorize(:green)
-      else
-        puts "rendering card game without knowing session".colorize(:yellow)
-      end
+
+    def content
       render "./src/card_game/card_game.slang"
     end
-
-    # def content
-    #   render "./src/card_game/card_game.slang"
-    # end
 
     def initialize(@name)
       (1..5).each {|c| hand << draw_card}
@@ -35,11 +25,6 @@ module CardGame
     def card_image(card)
       "/images/#{card.gsub(" ","_").downcase}.png"
     end
-
-    # def subscribe(subscriber)
-    #   chat_room.subscribe(subscriber)
-    #   super
-    # end
 
     # action comes in the form of dom=>param
     # { "cardgame-1234-card-5" => {"clicked"=>"true"}}
