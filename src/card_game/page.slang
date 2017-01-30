@@ -7,7 +7,7 @@ html
     script
       == javascript
   body
-    h1 Hi #{name}
-    == card_game.content
+    h1 Hi #{user_name}
+    == card_game.content(session_id: context.session.id)
     /* hr */
     /* == card_game2.content */

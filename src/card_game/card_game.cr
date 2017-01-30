@@ -11,9 +11,20 @@ module CardGame
     property chat_room = ChatRoom.new(name: dom_id)
     #TODO need to auto-subscribe game subscribers to chatroom
 
-    def content
+    # trying to figure out how to render a game for a particular user.
+    # so the input text show the name of the user being rendered for.
+    def content(session_id : String?)
+      if session_id
+        puts "about to render cardgame for this session: #{session_id}".colorize(:green)
+      else
+        puts "rendering card game without knowing session".colorize(:yellow)
+      end
       render "./src/card_game/card_game.slang"
     end
+
+    # def content
+    #   render "./src/card_game/card_game.slang"
+    # end
 
     def initialize(@name)
       (1..5).each {|c| hand << draw_card}
@@ -31,13 +42,15 @@ module CardGame
     # end
 
     # action comes in the form of dom=>param
+    # { "cardgame-1234-card-5" => {"clicked"=>"true"}}
     def subscriber_action(action : Hash(String,JSON::Type), session_id : String)
       puts "action #{action} by session #{session_id} to #{self.class.to_s.colorize(:green).to_s} #{name.colorize(:green).to_s}"
-      clicked_id = action.first_key
-      if clicked_id.match(/card-[0-4]/) && (card = index_from( source: clicked_id, max: hand.size - 1))
+      acted_upon = action.first_key
+      action_taken = action.first_value.as(Hash(String,JSON::Type))  #FIXME need to make sure this is typed correctly as a parameter
+      if action_taken.first_key=="click" && acted_upon.match(/card-[0-4]/) && (card = index_from( source: acted_upon, max: hand.size - 1))
         player_name = Session.get(session_id).as(Session).string("name")  # we assume that this has been validated and a session exists and name is set
         hand[card] = draw_card
-        update_attribute({"id"=>clicked_id, "attribute"=>"src", "value"=>card_image hand[card]})
+        update_attribute({"id"=>acted_upon, "attribute"=>"src", "value"=>card_image hand[card]})
         update({"id"=>"#{dom_id}-cards-remaining", "value"=>deck.size})
         chat_room.send ChatMessage.new(name: player_name, time: Time.now, mesg: hand[card])
       end

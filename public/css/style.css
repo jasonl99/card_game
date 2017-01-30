@@ -1,5 +1,10 @@
 body {
   position: relative;
+  font-family: Andale Mono, monospace;
+}
+
+#stats > span.cards-remaining {
+  float: right;
 }
 
 span.card-holder {
@@ -13,7 +18,10 @@ span.card-holder {
 
 .chat-room div.message-holder {
   overflow-y: scroll;
-  height: 125px;
+  height: 8em;
+}
+.chat-room div.form-holder {
+  margin-top: 1.5em;
 }
 .chat-room {
   position: relative;
@@ -45,10 +53,10 @@ span.card-holder {
   border-right: 1px solid gray;
 }
 
-.chat-form {
-	position: relative;
-	margin-top 2em;
-}
+/* .chat-form { */
+/* 	position: relative; */
+/* 	margin-top 2em; */
+/* } */
 .chat-form .button-wrapper {
 	position: absolute;
 	width: 75;

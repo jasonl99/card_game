@@ -10,7 +10,6 @@ module CardGame
     end
 
     def send(chat_message : ChatMessage)
-      puts "Sending message: #{chat_message.inspect}"
       insert({"id"=>"#{dom_id}-message-holder", "value"=>chat_message.content})
     end
 
