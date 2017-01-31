@@ -39,16 +39,18 @@ span.card-holder {
   text-overflow: wrap;
 }
 
-.chat-room span.user {
+.chat-room span.name {
+  display: inline-block;
   background-color: #fafafa;
   border-right: 1px solid gray;
-  width: 100px;
+  min-width: 100px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .chat-room span.time {
+  display: inline-block;
   background-color: #f8f8f8;
   border-right: 1px solid gray;
 }
