@@ -8,9 +8,9 @@ module CardGame
     @messages = RingBuffer(ChatMessage).new(size: MAX_MESSAGES)
     property messages
 
-    def initialize(@name)
-      super
-    end
+    # def initialize(@name)
+    #   super
+    # end
 
     def send(chat_message : ChatMessage)
       messages << chat_message
