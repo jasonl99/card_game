@@ -20,17 +20,17 @@ module CardGame
     # switch to using #update_attribute once it has been modified to update
     # specific sockets
     def subscribed(session_id : String, socket : HTTP::WebSocket)
-      # session = Session.get(session_id)
       if (user_name = session_string(session_id: session_id, value_of: "name"))
-        puts "Chatroom {self.name} subscribed by #{session_id}"
         personalize = {"action"=>"update_attribute", "id"=>"#{dom_id}-chatname", "attribute"=>"value", "value"=>user_name}
         update_attribute(personalize, [socket])
       end
     end
 
 
-    def subscriber_action(action : Hash(String,JSON::Type), session_id : String)
-      puts "ChatRoom action received: #{action} from #{session_id}"
+    def subscriber_action(dom_item : String, action : Hash(String,JSON::Type), session_id : String?)
+      player_name = "Anon"
+      player_name = Session.get(session_id.as(String)).as(Session).string?("name") if session_id
+      puts "#{dom_item} / #{player_name}: #{action}"
     end
 
     def rendered_messages

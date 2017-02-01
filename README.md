@@ -1,7 +1,12 @@
 # card_game
 
-Shows how lattice-core uses websockets to maintain state between server and client
+This is a demo app for [lattice-core]() which is a framework for crystal that is still
+very much in the proof-of-concept stage.  The intent is to really show how powerful
+a WebSocket-first framework can be.  Kemal serves as an excellent base framework, and
+crystal's ruby-like syntax with native speed brings everything together.
 
+If you haven't spent some time investigation [crystal](crystal-lang.org), you're doing
+yourself a disservice.  It is an _amazing_ language with an excellent library.
 
 ## Installation
 
@@ -13,6 +18,19 @@ run the app with `crystal src/card_game.cr`
 open a browser and go to `localhost:3000/cardgame/abc`
 where `abc` becomes a new game at that address.  
 Use chrome & firefox at the same url to show two different sessions accessing a game.
+
+#Walk Through
+
+First things first.  This demo _emulates_ a card game.  Imagine if you were playing poker
+online against a few other people. Each of you is show a deck.  This is what that interface
+might look like, but it's a facade intended more to show how the interaction between server
+and client work.  It has a a deck of 52 cards which are drawn from randomly.  
+But there's one hand, which all players see and interact with.  You can click until the deck
+runs out.
+
+That said, here's an opening page.
+
+![hand](./screenshots/card_game_01.png)
 
 ## Development
 
