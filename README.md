@@ -70,7 +70,22 @@ In the above example, I'm hovering over the six of hearts.  Now I click:
 ![hand](./screenshots/cg3.png)
 
 With one click, the image has changed, the number of cards remaining has decreased from 47 to 46,
-and a new chat message has been entered that shows I picked the 9 of Diamons.
+and a new chat message has been entered that shows I picked the 9 of Diamonds.
+
+Ok, sure, that's interesting.  There could be some ugly javascript doing some smoke-and-mirrors
+that make things _look_ interesting.  But how is this different?
+
+Let's try something a little more impressive, and add an animated gif while we're at it.
+
+We're going to have Firefox on the left, Chrome on the right, both going to the same game named
+`twoplayers`.  Both browsers have the development console open so you can see the updates as
+they happen.
+
+Notice that each click on a card updates the card for both players, across different browsers, 
+and it does it about as close to real time as you can get.  Notice, too, that the chat window
+updates with the card drawn by each user, and the Cards Remaining In Deck update as well.
+
+![animation][./screenshots/demo.gif]
 
 
 
