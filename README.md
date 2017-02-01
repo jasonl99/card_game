@@ -85,8 +85,7 @@ Notice that each click on a card updates the card for both players, across diffe
 and it does it about as close to real time as you can get.  Notice, too, that the chat window
 updates with the card drawn by each user, and the Cards Remaining In Deck update as well.
 
-![animation](./screenshots/demo.gif =1000x)
-<img src="./screenshots/demo.gif" width=75% height=75%>
+![animation](./screenshots/demo.gif)
 
 
 
