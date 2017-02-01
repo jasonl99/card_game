@@ -30,7 +30,7 @@ runs out.
 
 That said, here's an opening page.
 
-![hand](./screenshots/card_game_01.png)
+![hand](./screenshots/cg1.png)
 
 ## Development
 
