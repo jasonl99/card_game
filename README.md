@@ -32,6 +32,51 @@ That said, here's an opening page.
 
 ![hand](./screenshots/cg1.png)
 
+This is pretty straightforward.  In fact, here's the for the game, the hand, and the first
+card, including some data- attributes that will be discussed in detail later...
+
+```html
+<h1>Hi Jason</h1>
+<div data-version="3" data-item="cardgame-94243174726304">
+  <div id="hand">
+    <span class="card-holder">
+      <img class="card" src="/images/king_of_hearts.png" data-item="cardgame-94243174726304-card-0" data-track="click">
+    </span>
+    ... more card holder spans
+  </div>
+</div>
+
+```
+
+Nothing fancy.  There's under 100 lines of javascript code, and no external libraries like
+jQuery, lodash, underscore, etc (not that you wouldn't ulimately use those; it's just that 
+they are not needed for this framework).
+
+Take note of a few things.  The url, `/cardgame/mygame?player_name=Jason` creates a game 
+called "mygame" and my player name is Jason (in a real app, you'd have authentication and the
+like, but this demo set up to switch games quickly to show the meat and potatoes).
+
+There in an in-game chat that allows player communcation, and it also shows when a player
+draws a card.  Simple stuff.
+
+So we have the stage set:  We have a "game" that can have many players, each of who interact with
+a set of playing cards.   Suppose I want to change the second card, which I do by clicking the
+card itself:
+
+![hand](./screenshots/cg2.png)
+
+In the above example, I'm hovering over the six of hearts.  Now I click:
+
+![hand](./screenshots/cg3.png)
+
+With one click, the image has changed, the number of cards remaining has decreased from 47 to 46,
+and a new chat message has been entered that shows I picked the 9 of Diamons.
+
+
+
+
+
+
 ## Development
 
 TODO: Write development instructions here
