@@ -3,3 +3,9 @@ div.chat-room data-item=dom_id
     == rendered_messages
   div#.form-holder data-item="#{dom_id}-form-holder"
     == display_form
+div.admin
+  hr
+  div data-item="#{dom_id}-typing"
+  - subscribers.each do |sub|
+    div data-item="#{dom_id}-typing-#{sub.object_id}"
+

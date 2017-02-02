@@ -2,9 +2,9 @@ module CardGame
   class ChatMessage
     property name : String
     property time : Time
-    property mesg : String
+    property message : String
 
-    def initialize(@name, @time, @mesg)
+    def initialize(@name, @message, @time = Time.now)
     end
 
     def content

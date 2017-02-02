@@ -28,7 +28,7 @@ module CardGame
 
     # action comes in the form of dom=>param
     # { "cardgame-1234-card-5" => {"clicked"=>"true"}}
-    def subscriber_action(data_item : String, action : Hash(String,JSON::Type), session_id : String)
+    def subscriber_action(data_item : String, action : Hash(String,JSON::Type), session_id : String, socket)
       # puts "action #{action} by session #{session_id} element: #{data_item} to #{self.class.to_s.colorize(:green).to_s} #{name.colorize(:green).to_s}"
       begin
         player_name = Session.get(session_id).as(Session).string("name")  # we assume that this has been validated and a session exists and name is set
@@ -42,7 +42,7 @@ module CardGame
         hand[card] = draw_card
         update_attribute({"id"=>data_item, "attribute"=>"src", "value"=>card_image hand[card]})
         update({"id"=>"#{dom_id}-cards-remaining", "value"=>deck.size})
-        chat_room.send ChatMessage.new(name: player_name, time: Time.now, mesg: hand[card])
+        chat_room.send ChatMessage.new(name: player_name, message: hand[card])
       end
 
       # acted_upon = action.first_key

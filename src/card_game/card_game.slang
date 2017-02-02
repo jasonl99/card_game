@@ -2,7 +2,7 @@ div data-version=version data-item=dom_id
   div#hand
     - hand.each_with_index do |card,idx|
       span.card-holder
-        img.card src=card_image(card) data-item="#{dom_id}-card-#{idx}" data-track="click"
+        img.card src=card_image(card) data-item="#{dom_id}-card-#{idx}" data-track="click,mouseenter"
   div#chat-room
     == chat_room.content
   div#stats
