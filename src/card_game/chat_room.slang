@@ -7,5 +7,8 @@ div.admin
   hr
   div data-item="#{dom_id}-typing"
   - subscribers.each do |sub|
-    div data-item="#{dom_id}-typing-#{sub.object_id}"
+    div
+      span 
+        = subscriber_name(sub)
+      span data-item="#{dom_id}-typing-#{sub.object_id}"
 

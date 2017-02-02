@@ -12,6 +12,15 @@ module CardGame
     #   super
     # end
 
+    def subscriber_name(socket)
+      name = "anon"
+      if (session_id = Lattice::Connected::WebSocket::REGISTERED_SESSIONS[socket.object_id])
+        if (session = Session.get session_id)
+          name = session.string? "name" || "anon"
+        end
+      end
+    end
+
     def send(chat_message : ChatMessage)
       messages << chat_message
       insert({"id"=>"#{dom_id}-message-holder", "value"=>chat_message.content})
@@ -24,7 +33,7 @@ module CardGame
         personalize = {"action"=>"update_attribute", "id"=>"#{dom_id}-chatname", "attribute"=>"value", "value"=>user_name}
         update_attribute(personalize, [socket])
         insert({   "id" => "#{dom_id}-typing", 
-                "value" => "<div data-item='#{dom_id}-typing-#{socket.object_id}'></div>" })
+                   "value" => "<div><span>#{subscriber_name socket} </span><span data-item='#{dom_id}-typing-#{socket.object_id}'></span></div>" })
       end
     end
     # div data-item="chatroom-#{dom_id}-typing"
