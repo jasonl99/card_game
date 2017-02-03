@@ -88,4 +88,5 @@ updates with the card drawn by each user, and the Cards Remaining In Deck update
 ![animation](./screenshots/demo.gif)
 
 
+## Contributors
 - [Jason Landry](https://github.com/jasonl99) creator, maintainer
