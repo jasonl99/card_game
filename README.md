@@ -1,6 +1,6 @@
 # card_game
 
-This is a demo app for [lattice-core]() which is a framework for crystal that is still
+This is a demo app for [lattice-core](https://github.com/jasonl99/lattice-core) which is a framework for crystal that is still
 very much in the proof-of-concept stage.  The intent is to really show how powerful
 a WebSocket-first framework can be.  Kemal serves as an excellent base framework, and
 crystal's ruby-like syntax with native speed brings everything together.
