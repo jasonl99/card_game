@@ -12,6 +12,15 @@ module CardGame
     #   super
     # end
 
+    def subscriber_name(socket)
+      name = "anon"
+      if (session_id = Lattice::Connected::WebSocket::REGISTERED_SESSIONS[socket.object_id])
+        if (session = Session.get session_id)
+          name = session.string? "name" || "anon"
+        end
+      end
+    end
+
     def send(chat_message : ChatMessage)
       messages << chat_message
       insert({"id"=>"#{dom_id}-message-holder", "value"=>chat_message.content})
@@ -25,12 +34,26 @@ module CardGame
         update_attribute(personalize, [socket])
       end
     end
+    # div data-item="chatroom-#{dom_id}-typing"
+    # - subscribers.each do |sub|
+    #   div data-item="chatroom-#{dom_id}-typing-#{sub.object_id}"
+    #   end
 
 
-    def subscriber_action(dom_item : String, action : Hash(String,JSON::Type), session_id : String?)
+    def subscriber_action(dom_item : String, action : Hash(String,JSON::Type), session_id : String?, socket)
+      puts "In #{self.class.to_s.split("::").last.colorize(:white).on(:green).to_s}: data_item: #{dom_item.colorize(:green).to_s} action #{action.inspect.colorize(:yellow).to_s}"
       player_name = "Anon"
       player_name = Session.get(session_id.as(String)).as(Session).string?("name") if session_id
-      puts "#{dom_item} / #{player_name}: #{action}"
+      if action["action"] == "submit" && player_name
+        params = action["params"].as(Hash(String,JSON::Type))
+        send ChatMessage.new name: player_name, message: params["new-msg"].as(String)
+      end
+      if action["action"] == "input"
+        params = action["params"].as(Hash(String,JSON::Type))
+        new_val = params["value"].as(String)
+        update({   "id" => "#{dom_id}-typing-#{socket.object_id}",
+                "value" => new_val })
+      end
     end
 
     def rendered_messages
