@@ -29,14 +29,12 @@ module CardGame
     # action comes in the form of dom=>param
     # { "cardgame-1234-card-5" => {"clicked"=>"true"}}
     def subscriber_action(data_item : String, action : Hash(String,JSON::Type), session_id : String, socket)
-      # puts "action #{action} by session #{session_id} element: #{data_item} to #{self.class.to_s.colorize(:green).to_s} #{name.colorize(:green).to_s}"
+      puts "In #{self.class.to_s.split("::").last.colorize(:white).on(:green).to_s}: data_item: #{data_item.colorize(:green).to_s} action #{action.inspect.colorize(:yellow).to_s}"
       begin
         player_name = Session.get(session_id).as(Session).string("name")  # we assume that this has been validated and a session exists and name is set
       rescue
         player_name = "Anon"
       end
-
-      puts "#{data_item} / #{player_name}: #{action}"
       if action["action"]=="click" && (card = index_from(source: data_item, max: hand.size-1))
         # player_name = Session.get(session_id).as(Session).string("name")  # we assume that this has been validated and a session exists and name is set
         hand[card] = draw_card
@@ -61,6 +59,7 @@ module CardGame
     end
 
     def draw_card
+      self.deck = new_deck if self.deck.size == 0
       card = deck.sample
       deck.delete card
       card  # OPTIMIZE does delete already return this?

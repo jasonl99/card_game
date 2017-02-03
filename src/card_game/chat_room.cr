@@ -32,8 +32,6 @@ module CardGame
       if (user_name = session_string(session_id: session_id, value_of: "name"))
         personalize = {"action"=>"update_attribute", "id"=>"#{dom_id}-chatname", "attribute"=>"value", "value"=>user_name}
         update_attribute(personalize, [socket])
-        insert({   "id" => "#{dom_id}-typing", 
-                   "value" => "<div><span>#{subscriber_name socket} </span><span data-item='#{dom_id}-typing-#{socket.object_id}'></span></div>" })
       end
     end
     # div data-item="chatroom-#{dom_id}-typing"
@@ -43,9 +41,9 @@ module CardGame
 
 
     def subscriber_action(dom_item : String, action : Hash(String,JSON::Type), session_id : String?, socket)
+      puts "In #{self.class.to_s.split("::").last.colorize(:white).on(:green).to_s}: data_item: #{dom_item.colorize(:green).to_s} action #{action.inspect.colorize(:yellow).to_s}"
       player_name = "Anon"
       player_name = Session.get(session_id.as(String)).as(Session).string?("name") if session_id
-      puts "#{dom_item} / #{player_name}: #{action}"
       if action["action"] == "submit" && player_name
         params = action["params"].as(Hash(String,JSON::Type))
         send ChatMessage.new name: player_name, message: params["new-msg"].as(String)
