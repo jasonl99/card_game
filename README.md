@@ -88,21 +88,4 @@ updates with the card drawn by each user, and the Cards Remaining In Deck update
 ![animation](./screenshots/demo.gif)
 
 
-
-
-
-## Development
-
-TODO: Write development instructions here
-
-## Contributing
-
-1. Fork it ( https://github.com/[your-github-name]/card_game/fork )
-2. Create your feature branch (git checkout -b my-new-feature)
-3. Commit your changes (git commit -am 'Add some feature')
-4. Push to the branch (git push origin my-new-feature)
-5. Create a new Pull Request
-
-## Contributors
-
-- [[your-github-name]](https://github.com/[your-github-name]) Jason Landry - creator, maintainer
+- [Jason Landry](https://github.com/jasonl99) creator, maintainer
