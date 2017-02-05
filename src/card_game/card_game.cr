@@ -4,12 +4,13 @@ module CardGame
     VALUES = %w(2 3 4 5 6 7 8 9 10 Jack Queen King Ace)
     SUITS  = %w(Hearts Diamonds Spades Clubs)
     @version = 1
+    @chat_room = ChatRoom.new(dom_id)
+    @game_admin = GameAdmin.new(dom_id)
+    @hand = [] of String
+    property chat_room, game_admin, hand, version
     property url : String?
     property deck : Array(String) = new_deck
-    property hand = [] of String
-    property version
-    property chat_room = ChatRoom.new(name: dom_id)
-    #TODO need to auto-subscribe game subscribers to chatroom
+
 
 
     def content
@@ -18,6 +19,9 @@ module CardGame
 
     def initialize(@name)
       (1..5).each {|c| hand << draw_card}
+      @chat_room.add_listener(self)
+      @chat_room.add_listener(game_admin)
+      @listeners << game_admin
       super
       # chat_room.subscribers = subscribers
     end
@@ -30,6 +34,8 @@ module CardGame
     # { "cardgame-1234-card-5" => {"clicked"=>"true"}}
     def subscriber_action(data_item : String, action : Hash(String,JSON::Type), session_id : String, socket)
       puts "In #{self.class.to_s.split("::").last.colorize(:white).on(:green).to_s}: data_item: #{data_item.colorize(:green).to_s} action #{action.inspect.colorize(:yellow).to_s}"
+      # msg = "In #{self.class.to_s.split("::").last.colorize(:white).on(:green).to_s}: data_item: #{data_item.colorize(:green).to_s} action #{action.inspect.colorize(:yellow).to_s}"
+      # Lattice::Connected::SOCKET_LOGGER.debug msg
       begin
         player_name = Session.get(session_id).as(Session).string("name")  # we assume that this has been validated and a session exists and name is set
       rescue
@@ -40,7 +46,7 @@ module CardGame
         hand[card] = draw_card
         update_attribute({"id"=>data_item, "attribute"=>"src", "value"=>card_image hand[card]})
         update({"id"=>"#{dom_id}-cards-remaining", "value"=>deck.size})
-        chat_room.send ChatMessage.new(name: player_name, message: hand[card])
+        chat_room.send_chat ChatMessage.new(name: player_name, message: hand[card])
       end
 
       # acted_upon = action.first_key

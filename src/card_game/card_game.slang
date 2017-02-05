@@ -2,7 +2,8 @@ div data-version=version data-item=dom_id data-subscribe=""
   div#hand
     - hand.each_with_index do |card,idx|
       span.card-holder
-        img.card src=card_image(card) data-item="#{dom_id}-card-#{idx}" data-event-attributes="src" data-events="click,mouseenter,mouseleave"
+        img.card src=card_image(card) data-item="#{dom_id}-card-#{idx}" data-event-attributes="src" data-events="click"
+  div#admin data-item=game_admin.dom_id data-subscribe="#{chat_room.dom_id}, #{dom_id}"
   div#chat-room
     == chat_room.content
   div#stats

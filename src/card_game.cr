@@ -9,16 +9,29 @@ require "./card_game/*"
 
 module CardGame
 
+  # Session.config do |config|
+  #   config.secret = "some secret"
+  # end
+
+
   Session.config do |config|
-    config.secret = "some secret"
+    config.cookie_name = "session_id"
+    config.secret = "some_secret"
+    config.gc_interval = 2.minutes # 2 minutes
   end
+
+  # this is just a workaround until storable_object is fixed in kemal-session
+  # class UserStorableObject
+  #   JSON.mapping({
+  #     id: Int32,
+  #     name: String
+  #   })
+  #   include Session::StorableObject
+
+  #   def initialize(@id : Int32, @name : String); end
+  # end
   
   get "/cardgames/:games" do |context|
-    # if (user_name = context.params.["user_name"])
-    puts context.params.inspect
-    # if 
-    #   context.session.string("name",user_name)
-    # end
     unless (user_name = context.session.string?("name"))
       user_name = Faker::Name.first_name
       context.session.string("name",user_name)

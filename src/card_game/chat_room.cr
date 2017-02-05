@@ -21,7 +21,7 @@ module CardGame
       end
     end
 
-    def send(chat_message : ChatMessage)
+    def send_chat(chat_message : ChatMessage)
       messages << chat_message
       insert({"id"=>"#{dom_id}-message-holder", "value"=>chat_message.content})
     end
@@ -46,13 +46,13 @@ module CardGame
       player_name = Session.get(session_id.as(String)).as(Session).string?("name") if session_id
       if action["action"] == "submit" && player_name
         params = action["params"].as(Hash(String,JSON::Type))
-        send ChatMessage.new name: player_name, message: params["new-msg"].as(String)
+        send_chat ChatMessage.new name: player_name, message: params["new-msg"].as(String)
       end
       if action["action"] == "input"
         params = action["params"].as(Hash(String,JSON::Type))
         new_val = params["value"].as(String)
-        update({   "id" => "#{dom_id}-typing-#{socket.object_id}",
-                "value" => new_val })
+        # update({   "id" => "#{dom_id}-typing-#{socket.object_id}",
+        #         "value" => new_val })
       end
     end
 
