@@ -84,10 +84,6 @@ body {
 	border: none;
 }
 
-div#games, div#sequence {
-  display: flex
-}
-
 img.card {
   margin:5px;
   max-width: 70px;

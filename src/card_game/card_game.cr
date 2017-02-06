@@ -1,13 +1,14 @@
 require "./chat_room"
+require "./event_observer"
 module CardGame
   class CardGame < Lattice::Connected::WebObject
     VALUES = %w(2 3 4 5 6 7 8 9 10 Jack Queen King Ace)
     SUITS  = %w(Hearts Diamonds Spades Clubs)
     @version = 1
     @chat_room = ChatRoom.new(dom_id)
-    @game_admin = GameAdmin.new(dom_id)
+    @event_observer = EventObserver.new(dom_id)
     @hand = [] of String
-    property chat_room, game_admin, hand, version
+    property chat_room, hand, version, event_observer
     property url : String?
     property deck : Array(String) = new_deck
 
@@ -20,10 +21,9 @@ module CardGame
     def initialize(@name)
       (1..5).each {|c| hand << draw_card}
       @chat_room.add_listener(self)
-      @chat_room.add_listener(game_admin)
-      @listeners << game_admin
+      chat_room.add_listener @event_observer
       super
-      # chat_room.subscribers = subscribers
+      add_listener @event_observer
     end
 
     def card_image(card)

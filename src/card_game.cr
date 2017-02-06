@@ -40,7 +40,7 @@ module CardGame
     game1, game2 = context.params.url["games"].split(",").first(2)
     javascript, card_game1 = CardGame.preload(name: game1, session_id: context.session.id, create: true)
            js2, card_game2 = CardGame.preload(name: game2, session_id: context.session.id, create: true)
-    games = [card_game1, card_game2]
+    games = [card_game1, card_game2].compact
     render "src/card_game/games.slang"
   end
 
@@ -55,7 +55,7 @@ module CardGame
     puts "Username is #{user_name}"
     game_name = context.params.url["game"]
     javascript, card_game = CardGame.preload(name: game_name, session_id: context.session.id, create: true)
-    games = [card_game]
+    games = [card_game].compact
     render "src/card_game/games.slang"
   end
 

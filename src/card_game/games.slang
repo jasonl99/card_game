@@ -16,4 +16,3 @@ html
       - games.each_with_index do |game,index|
         - "<hr>" if index>0
         == game.content
-    div#sequence data-item=Lattice::Connected::SEQUENCE_DISPLAY.dom_id data-max-items=15 data-subscribe=""
