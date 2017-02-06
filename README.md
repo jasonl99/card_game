@@ -1,12 +1,11 @@
 # card_game
 
-This is a demo app for [lattice-core](https://github.com/jasonl99/lattice-core) which is a framework for crystal that is still
+This is a demo app for [lattice-core](https://github.com/jasonl99/lattice-core) which is a framework for crystal I'm working on that is still
 very much in the proof-of-concept stage.  The intent is to really show how powerful
-a WebSocket-first framework can be.  Kemal serves as an excellent base framework, and
+a WebSocket-first framework can be.  Kemal serves as an excellent base, and
 crystal's ruby-like syntax with native speed brings everything together.
 
-If you haven't spent some time investigation [crystal](crystal-lang.org), you're doing
-yourself a disservice.  It is an _amazing_ language with an excellent library.
+If you haven't spent some time investigation [crystal](crystal-lang.org), please take a look.  It is an _amazing_ language with an excellent library.
 
 ## Installation
 
@@ -14,19 +13,16 @@ clone this repo and run `shards install`
 
 ## Usage
 
-run the app with `crystal src/card_game.cr`
-open a browser and go to `localhost:3000/cardgame/abc`
-where `abc` becomes a new game at that address.  
-Use chrome & firefox at the same url to show two different sessions accessing a game.
+Run the app in a terminal window with `crystal src/card_game.cr`
+Open a browser and go to `localhost:3000/cardgame/abc` where `abc` becomes a new game at that address.  
+Use Chrome, Firefox, Safari, or whatever browser you'd like at the same url to show more than one session accessing a game.  Imagine each browser is a different user in a different location.
+
+For demonstration purposes, each session is given a random username (so you'll have two different names if you have Chrome and Firefox both accessing the same game, which is cool, because it really shows how communication occurs between _all_ game users)
 
 #Walk Through
 
 First things first.  This demo _emulates_ a card game.  Imagine if you were playing poker
-online against a few other people. Each of you is show a deck.  This is what that interface
-might look like, but it's a facade intended more to show how the interaction between server
-and client work.  It has a a deck of 52 cards which are drawn from randomly.  
-But there's one hand, which all players see and interact with.  You can click until the deck
-runs out.
+online against a few other people. Each of you is shown a deck.   But there's one hand, which all players see and interact with.  If the deck runs out, a new deck is shuffled.
 
 That said, here's an opening page.
 
@@ -37,7 +33,7 @@ card, including some data- attributes that will be discussed in detail later...
 
 ```html
 <h1>Hi Jason</h1>
-<div data-version="3" data-item="cardgame-94243174726304">
+<div data-item="cardgame-94243174726304">
   <div id="hand">
     <span class="card-holder">
       <img class="card" src="/images/king_of_hearts.png" data-item="cardgame-94243174726304-card-0" data-track="click">
@@ -45,16 +41,11 @@ card, including some data- attributes that will be discussed in detail later...
     ... more card holder spans
   </div>
 </div>
-
 ```
 
 Nothing fancy.  There's under 100 lines of javascript code, and no external libraries like
 jQuery, lodash, underscore, etc (not that you wouldn't ulimately use those; it's just that 
 they are not needed for this framework).
-
-Take note of a few things.  The url, `/cardgame/mygame?player_name=Jason` creates a game 
-called "mygame" and my player name is Jason (in a real app, you'd have authentication and the
-like, but this demo set up to switch games quickly to show the meat and potatoes).
 
 There in an in-game chat that allows player communcation, and it also shows when a player
 draws a card.  Simple stuff.
@@ -77,13 +68,14 @@ that make things _look_ interesting.  But how is this different?
 
 Let's try something a little more impressive, and add an animated gif while we're at it.
 
-We're going to have Firefox on the left, Chrome on the right, both going to the same game named
-`twoplayers`.  Both browsers have the development console open so you can see the updates as
-they happen.
+We're going to have Chrome on the left, Firefox on the right, both going to the same game named
+`game1`. 
+
+In this example, a GameObserver object has been added to the game.  This observer receives events directly from WebObjects that it's listening to.  In the case, we do nothing more than display those events.
 
 Notice that each click on a card updates the card for both players, across different browsers, 
 and it does it about as close to real time as you can get.  Notice, too, that the chat window
-updates with the card drawn by each user, and the Cards Remaining In Deck update as well.
+updates with the card drawn by each user, and the Cards Remaining In Deck update as well.  In this example, I've also created a tracking event on typing in the chat form:  every time I type, and event goes to the server and out to _each_ client.  Distributed events!
 
 ![animation](./screenshots/demo.gif)
 

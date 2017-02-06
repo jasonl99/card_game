@@ -7,13 +7,53 @@ body {
   float: right;
 }
 
+.observed-events {
+  padding: 5px;
+}
+div.connected-event {
+  display: flex;
+}
+
 .observed-events > div.connected-event > span {
+  flex: 1;
+  font-size: 12px;
   font-family: Helvetica; 
-  outline: 1px solid gray;
   padding: 1px;
   background-color: gray;
   color: white;
-  margin: 0 2px;
+  margin: 2px 2px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overlow: ellipsis;
+}
+.observed-events > div.connected-event > span.header {
+  color: gray !important;
+  background-color: white !important;
+  font-weight: bold;
+  margin: 1px;
+  border-bottom: 1px solid;
+}
+
+.observed-events > div.connected-event > span.user  {
+  background-color: white;
+  color: darkblue;
+  font-weight: bold;
+  flex-shrink: 2;
+}
+.observed-events > div.connected-event > span.sender  {
+  background-color: rgba(128,255,128,0.75);
+  color: darkblue;
+  font-weight: bold;
+}
+.observed-events > div.connected-event > span.dom_item  {
+  background-color: rgba(128,192,128,0.75);
+  color: darkblue;
+  font-weight: bold;
+  flex-grow: 2;
+}
+.observed-events > div.connected-event > span.action  {
+  flex-grow: 5;
+  background-color: rgba(gray,0.75);
 }
 
 .chat-room div.message-holder {

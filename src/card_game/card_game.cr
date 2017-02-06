@@ -20,7 +20,7 @@ module CardGame
 
     def initialize(@name)
       (1..5).each {|c| hand << draw_card}
-      @chat_room.add_observer(self)
+      # @chat_room.add_observer(self)  ## this is not a EventObserver yet
       chat_room.add_observer @game_observer
       super
       add_observer @game_observer
