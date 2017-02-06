@@ -5,9 +5,9 @@ module CardGame
     SUITS  = %w(Hearts Diamonds Spades Clubs)
     @version = 1
     @chat_room = ChatRoom.new(dom_id)
-    @event_observer = Lattice::Connected::EventObserver.new(dom_id)
+    @game_observer = GameObserver.new(dom_id)
     @hand = [] of String
-    property chat_room, hand, version, event_observer
+    property chat_room, hand, version, game_observer
     property url : String?
     property deck : Array(String) = new_deck
 
@@ -19,10 +19,10 @@ module CardGame
 
     def initialize(@name)
       (1..5).each {|c| hand << draw_card}
-      @chat_room.add_listener(self)
-      chat_room.add_listener @event_observer
+      @chat_room.add_observer(self)
+      chat_room.add_observer @game_observer
       super
-      add_listener @event_observer
+      add_observer @game_observer
     end
 
     def card_image(card)

@@ -11,4 +11,4 @@ div data-version=version data-item=dom_id data-subscribe=""
       | Cards Remaining in deck: 
       span data-item="#{dom_id}-cards-remaining"
         = deck.size
-div data-item=event_observer.dom_id data-subscribe=""
+div data-item=game_observer.dom_id data-subscribe=""

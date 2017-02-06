@@ -14,7 +14,7 @@ shards:
 
   kemal-session:
     github: kemalcr/kemal-session
-    commit: 1e4108bb982f590072c914c1dc10c5e62f2c2c53
+    commit: 9c6a473fa5680c82487edcdfc3258d6fc6f74b60
 
   kilt:
     github: jeromegn/kilt
@@ -30,7 +30,7 @@ shards:
 
   radix:
     github: luislavena/radix
-    version: 0.3.6
+    version: 0.3.7
 
   slang:
     github: jeromegn/slang
