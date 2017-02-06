@@ -1,12 +1,11 @@
 require "./chat_room"
-require "./event_observer"
 module CardGame
   class CardGame < Lattice::Connected::WebObject
     VALUES = %w(2 3 4 5 6 7 8 9 10 Jack Queen King Ace)
     SUITS  = %w(Hearts Diamonds Spades Clubs)
     @version = 1
     @chat_room = ChatRoom.new(dom_id)
-    @event_observer = EventObserver.new(dom_id)
+    @event_observer = Lattice::Connected::EventObserver.new(dom_id)
     @hand = [] of String
     property chat_room, hand, version, event_observer
     property url : String?
