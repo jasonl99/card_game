@@ -1,6 +1,6 @@
 # card_game
 
-This is a demo app for [lattice-core]() which is a framework for crystal that is still
+This is a demo app for [lattice-core](https://github.com/jasonl99/lattice-core) which is a framework for crystal that is still
 very much in the proof-of-concept stage.  The intent is to really show how powerful
 a WebSocket-first framework can be.  Kemal serves as an excellent base framework, and
 crystal's ruby-like syntax with native speed brings everything together.
@@ -88,21 +88,5 @@ updates with the card drawn by each user, and the Cards Remaining In Deck update
 ![animation](./screenshots/demo.gif)
 
 
-
-
-
-## Development
-
-TODO: Write development instructions here
-
-## Contributing
-
-1. Fork it ( https://github.com/[your-github-name]/card_game/fork )
-2. Create your feature branch (git checkout -b my-new-feature)
-3. Commit your changes (git commit -am 'Add some feature')
-4. Push to the branch (git push origin my-new-feature)
-5. Create a new Pull Request
-
 ## Contributors
-
-- [[your-github-name]](https://github.com/[your-github-name]) Jason Landry - creator, maintainer
+- [Jason Landry](https://github.com/jasonl99) creator, maintainer
