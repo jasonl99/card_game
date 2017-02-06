@@ -7,6 +7,15 @@ body {
   float: right;
 }
 
+.observed-events > div.connected-event > span {
+  font-family: Helvetica; 
+  outline: 1px solid gray;
+  padding: 1px;
+  background-color: gray;
+  color: white;
+  margin: 0 2px;
+}
+
 .chat-room div.message-holder {
   overflow-y: scroll;
   height: 8em;

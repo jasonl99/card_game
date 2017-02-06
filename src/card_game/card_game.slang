@@ -2,7 +2,7 @@ div data-version=version data-item=dom_id data-subscribe=""
   div#hand
     - hand.each_with_index do |card,idx|
       span.card-holder
-        img.card src=card_image(card) data-item="#{dom_id}-card-#{idx}" data-event-attributes="src" data-events="click"
+        img.card src=card_image(card) data-item="#{dom_id}-card-#{idx}" data-event-attributes="src" data-events="click,mouseenter"
   div#chat-room
     == chat_room.content
   div#stats
@@ -11,4 +11,4 @@ div data-version=version data-item=dom_id data-subscribe=""
       | Cards Remaining in deck: 
       span data-item="#{dom_id}-cards-remaining"
         = deck.size
-div data-item=game_observer.dom_id data-subscribe=""
+div.observed-events data-item=game_observer.dom_id data-subscribe="" data-maxChildren=10

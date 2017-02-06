@@ -1,4 +1,5 @@
 require "./chat_room"
+require "./game_observer"
 module CardGame
   class CardGame < Lattice::Connected::WebObject
     VALUES = %w(2 3 4 5 6 7 8 9 10 Jack Queen King Ace)

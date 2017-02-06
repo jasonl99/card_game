@@ -1,11 +1,10 @@
 require "./chat_message"
-require "./ring_buffer"
 module CardGame
   class ChatRoom < Lattice::Connected::WebObject
     MAX_MESSAGES = 5
     # property messages = Array(ChatMessage | Nil).new(size: MAX_MESSAGES, value: nil)
     # property current_message = 0  # an index in the circular buffer for messages
-    @messages = RingBuffer(ChatMessage).new(size: MAX_MESSAGES)
+    @messages = Lattice::RingBuffer(ChatMessage).new(size: MAX_MESSAGES)
     property messages
 
     # def initialize(@name)
