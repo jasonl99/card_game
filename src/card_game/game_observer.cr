@@ -1,4 +1,3 @@
-require "markdown"
 module CardGame
   # FIXME Need a generic way to get info from a session
   class GameEvent < Lattice::Connected::ConnectedEvent
