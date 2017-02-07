@@ -24,7 +24,7 @@ div.connected-event {
   margin: 2px 2px;
   overflow: hidden;
   white-space: nowrap;
-  text-overlow: ellipsis;
+  text-overflow: ellipsis;
 }
 .observed-events > div.connected-event > span.header {
   color: gray !important;
@@ -34,26 +34,49 @@ div.connected-event {
   border-bottom: 1px solid;
 }
 
+.observed-events > div.connected-event > span.direction  {
+  background-color: white;
+  color: gray;
+  flex-basis: 2%;
+  flex-shrink: 4;
+}
+
 .observed-events > div.connected-event > span.user  {
   background-color: white;
   color: darkblue;
   font-weight: bold;
-  flex-shrink: 2;
+  flex-basis: 10%
+  flex-shrink: 1;
 }
 .observed-events > div.connected-event > span.sender  {
   background-color: rgba(128,255,128,0.75);
   color: darkblue;
+  flex-basis: 5%;
+  flex-shrink: 1;
   font-weight: bold;
 }
 .observed-events > div.connected-event > span.dom_item  {
   background-color: rgba(128,192,128,0.75);
   color: darkblue;
   font-weight: bold;
-  flex-grow: 2;
+  flex-basis: 10%;
+  flex-grow: 1;
 }
 .observed-events > div.connected-event > span.action  {
   flex-grow: 5;
-  background-color: rgba(gray,0.75);
+  flex-basis: 40%;
+  color: black;
+  background-color: rgba(100,100,100,0.1);
+}
+/* eventually, a click event will expand span */
+.observed-events > div.connected-event > span.action.selected  {
+  flex-grow: 5;
+  flex-basis: 40%;
+  color: black;
+  background-color: rgba(100,100,100,0.1);
+  text-overflow: initial;
+  white-space: initial;
+  overflow: auto;
 }
 
 .chat-room div.message-holder {

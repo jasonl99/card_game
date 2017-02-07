@@ -1,4 +1,4 @@
-div data-version=version data-item=dom_id data-subscribe=""
+div data-item=dom_id data-subscribe=""
   div#hand
     - hand.each_with_index do |card,idx|
       span.card-holder
@@ -11,11 +11,13 @@ div data-version=version data-item=dom_id data-subscribe=""
       | Cards Remaining in deck: 
       span data-item="#{dom_id}-cards-remaining"
         = deck.size
-h3 GameObserver (events sent and received by the server)
-div.observed-events data-item=game_observer.dom_id data-subscribe="" data-maxChildren=GameObserver::MAX_ITEMS
+h3 GameObserver (events from server's perspective)
+div.observed-events
   div.connected-event
+    span.header.direction In/Out
     span.header.user User 
     span.header.sender Sender
     span.header.dom_item Target
     span.header.action Action
+div.observed-events data-item=game_observer.dom_id data-subscribe="" data-maxChildren=game_observer.max_events
   == game_observer.content

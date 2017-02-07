@@ -29,7 +29,7 @@ module CardGame
     # specific sockets
     def subscribed(session_id : String, socket : HTTP::WebSocket)
       if (user_name = session_string(session_id: session_id, value_of: "name"))
-        personalize = {"action"=>"update_attribute", "id"=>"#{dom_id}-chatname", "attribute"=>"value", "value"=>user_name}
+        personalize = {"id"=>"#{dom_id}-chatname", "attribute"=>"value", "value"=>user_name}
         update_attribute(personalize, [socket])
       end
     end

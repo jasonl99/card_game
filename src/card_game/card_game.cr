@@ -4,11 +4,10 @@ module CardGame
   class CardGame < Lattice::Connected::WebObject
     VALUES = %w(2 3 4 5 6 7 8 9 10 Jack Queen King Ace)
     SUITS  = %w(Hearts Diamonds Spades Clubs)
-    @version = 1
     @chat_room = ChatRoom.new(dom_id)
     @game_observer = GameObserver.new(dom_id)
     @hand = [] of String
-    property chat_room, hand, version, game_observer
+    property chat_room, hand, game_observer
     property url : String?
     property deck : Array(String) = new_deck
 
@@ -45,7 +44,7 @@ module CardGame
         # player_name = Session.get(session_id).as(Session).string("name")  # we assume that this has been validated and a session exists and name is set
         hand[card] = draw_card
         update_attribute({"id"=>data_item, "attribute"=>"src", "value"=>card_image hand[card]})
-        update({"id"=>"#{dom_id}-cards-remaining", "value"=>deck.size})
+        update({"id"=>"#{dom_id}-cards-remaining", "value"=>deck.size.to_s})
         chat_room.send_chat ChatMessage.new(name: player_name, message: hand[card])
       end
 

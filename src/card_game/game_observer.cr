@@ -1,3 +1,4 @@
+require "markdown"
 module CardGame
   # FIXME Need a generic way to get info from a session
   class GameEvent < Lattice::Connected::ConnectedEvent
@@ -6,19 +7,11 @@ module CardGame
         event_user = session.string?("name") || "Anonymous"
       end
       render "./src/card_game/game_observer.slang"
-      # <<-CONTENT
-      #   <div class="connected-event">
-      #     <span class="user">#{event_user}</span>
-      #     <span class="sender"  >#{sender.class.to_s.split("::").last}</span>
-      #     <span class="dom_item">#{dom_item}</span>
-      #     <span class="action">#{action}</span>
-      #   </div>
-      # CONTENT
     end
   end
 
   class GameObserver < Lattice::Connected::EventObserver(GameEvent)
-    MAX_ITEMS = 20
+    property max_events = 20
     def on_event( event )
       insert({"id"=>dom_id, "value"=>event.content})
     end 
