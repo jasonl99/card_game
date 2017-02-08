@@ -1,15 +1,10 @@
 module CardGame
-  class ChatMessage < Lattice::Connected::WebObject
+  class ChatMessage
     property name : String
     property time : Time = Time.now
-    property message : String?
+    property message : String
 
-    def self.build(creator, name, message, time = Time.now)
-      obj = new(name)
-      obj.message = message
-      obj.time = time
-      creator.insert({"id"=>"#{creator.dom_id}-message-holder", "value"=>obj.content})
-      obj
+    def initialize(@name, @message, @time = Time.now)
     end
 
     def content

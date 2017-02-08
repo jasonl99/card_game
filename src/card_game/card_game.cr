@@ -43,7 +43,7 @@ module CardGame
         hand[card] = draw_card
         update_attribute({"id"=>data_item, "attribute"=>"src", "value"=>card_image hand[card]})
         update({"id"=>"#{dom_id}-cards-remaining", "value"=>deck.size.to_s})
-        chat_room.send_chat ChatMessage.build(chat_room, name: player_name, message: hand[card])
+        chat_room.send_chat ChatMessage.new name: player_name, message: hand[card]
       end
 
     end

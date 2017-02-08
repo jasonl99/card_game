@@ -7,7 +7,7 @@ module CardGame
 
     def send_chat(chat_message : ChatMessage)
       messages << chat_message
-      # insert({"id"=>"#{dom_id}-message-holder", "value"=>chat_message.content})
+      insert({"id"=>"#{dom_id}-message-holder", "value"=>chat_message.content})
     end
 
     def subscribed(session_id : String, socket : HTTP::WebSocket)
@@ -22,7 +22,7 @@ module CardGame
       player_name = Session.get(session_id.as(String)).as(Session).string?("name") if session_id
       if action["action"] == "submit" && player_name
         params = action["params"].as(Hash(String,JSON::Type))
-        send_chat ChatMessage.build self, name: player_name, message: params["new-msg"].as(String)
+        send_chat ChatMessage.new name: player_name, message: params["new-msg"].as(String)
       end
     end
 
