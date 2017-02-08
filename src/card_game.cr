@@ -31,6 +31,22 @@ module CardGame
   #   def initialize(@id : Int32, @name : String); end
   # end
   
+  get "/admin/initialize_storage" do |context|
+    Storage.create
+  end
+
+  get "/stats" do |context|
+    javascript, global_stats = GlobalStats.preload(name: "global_stats", session_id: context.session.id, create: true)
+    if global_stats
+      render "src/card_game/stats.slang"
+    end
+    # javascript, card_game1 = CardGame.preload(name: game1, session_id: context.session.id, create: true)
+  end
+
+  get "/dbtest" do |context|
+    Storage.connection.exec "insert into page_hit (page) values (?)", "/dbtest"
+  end
+
   get "/cardgames/:games" do |context|
     unless (user_name = context.session.string?("name"))
       user_name = Faker::Name.first_name

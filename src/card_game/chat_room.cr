@@ -22,7 +22,7 @@ module CardGame
 
     def send_chat(chat_message : ChatMessage)
       messages << chat_message
-      insert({"id"=>"#{dom_id}-message-holder", "value"=>chat_message.content})
+      # insert({"id"=>"#{dom_id}-message-holder", "value"=>chat_message.content})
     end
 
     # switch to using #update_attribute once it has been modified to update
@@ -45,13 +45,11 @@ module CardGame
       player_name = Session.get(session_id.as(String)).as(Session).string?("name") if session_id
       if action["action"] == "submit" && player_name
         params = action["params"].as(Hash(String,JSON::Type))
-        send_chat ChatMessage.new name: player_name, message: params["new-msg"].as(String)
+        send_chat ChatMessage.build self, name: player_name, message: params["new-msg"].as(String)
       end
       if action["action"] == "input"
         params = action["params"].as(Hash(String,JSON::Type))
         new_val = params["value"].as(String)
-        # update({   "id" => "#{dom_id}-typing-#{socket.object_id}",
-        #         "value" => new_val })
       end
     end
 

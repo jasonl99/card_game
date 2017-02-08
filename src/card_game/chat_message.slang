@@ -1,4 +1,4 @@
-div.chat-message
+div.chat-message data-item=dom_id
   span.name
     = name
   span.time

@@ -6,7 +6,5 @@ html
     script
       == javascript
   body
-    div#games
-      - games.each_with_index do |game,index|
-        - "<hr>" if index>0
-        == game.content
+    div data-item=global_stats.dom_id data-subscribe=""
+      = global_stats.get_data
