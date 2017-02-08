@@ -5,7 +5,6 @@ module CardGame
     VALUES = %w(2 3 4 5 6 7 8 9 10 Jack Queen King Ace)
     SUITS  = %w(Hearts Diamonds Spades Clubs)
     property hand = [] of String
-    # property chat_room, hand, game_observer
     property url : String?
     property deck : Array(String) = new_deck
 
@@ -14,8 +13,7 @@ module CardGame
       render "./src/card_game/card_game.slang"
     end
 
-    def initialize(@name, @creator = nil)
-      super
+    def after_initialize
       (1..5).each {|c| hand << draw_card}
       add_child "chat_room", ChatRoom.child_of(creator: self)
       add_child "game_observer", GameObserver.child_of(creator: self)
@@ -26,6 +24,7 @@ module CardGame
     def game_observer
       @children["game_observer"].as(GameObserver)
     end
+
     def chat_room
       @children["chat_room"].as(ChatRoom)
     end
