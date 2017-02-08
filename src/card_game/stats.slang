@@ -6,14 +6,14 @@ html
     script
       == javascript
   body
-    div data-item=global_stats.dom_id data-subscribe=""
-      table
-        thead
-          tr
-            th Game
-            th Connections
-            th Last Connected
-            th Players
+    div#stats-table
+      div.header
+        div
+          span.header.game Game
+          span.header.connections Connections
+          span.header.last-connected Last Subscribed
+          span.header.players Players
 
-        tbody
-          == global_stats.items.values.map(&.as(GameStat)).map(&.table_row).join
+     div.data data-item=global_stats.dom_id data-subscribe="" 
+       == global_stats.content
+       /* == global_stats.items.values.map(&.as(GameStat)).map(&.content).join */

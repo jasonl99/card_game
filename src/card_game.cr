@@ -12,7 +12,12 @@ module CardGame
   # Session.config do |config|
   #   config.secret = "some secret"
   # end
+  
+  @@global_stats = GlobalStats.new(name: "global_stats")
 
+  def self.global_stats
+    @@global_stats
+  end
 
   Session.config do |config|
     config.cookie_name = "session_id"

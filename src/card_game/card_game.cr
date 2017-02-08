@@ -15,8 +15,8 @@ module CardGame
 
     def after_initialize
       (1..5).each {|c| hand << draw_card}
-      add_child "chat_room", ChatRoom.child_of(creator: self)
-      add_child "game_observer", GameObserver.child_of(creator: self)
+      add_child "chat_room", ChatRoom.child_of(creator: self,  dom_id: dom_id)
+      add_child "game_observer", GameObserver.child_of(creator: self, dom_id: dom_id)
       add_observer game_observer
       chat_room.add_observer game_observer
     end
@@ -53,6 +53,9 @@ module CardGame
       if (session = Session.get session_id) && (player_name = session.string?("name") )
         Storage.connection.exec "insert into player_game (player, game) values (?,?)", player_name, "#{name} (#{dom_id})"
       end
+      # if (gs = GameStat.find_child(dom_id))
+      #   gs.connections += 1
+      # end
     end
 
     def draw_card

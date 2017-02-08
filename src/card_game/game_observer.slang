@@ -1,6 +1,6 @@
 div.connected-event
-  span.direction =direction
-  span.user      =event_user
-  span.sender    =sender.class.to_s.split("::").last
-  span.dom_item  =dom_item
-  span.action    = action 
+  span.direction =connected_event.direction
+  span.user      =connected_event.event_user
+  span.sender    =connected_event.sender.class.to_s.split("::").last
+  span.dom_item  =connected_event.dom_item
+  span.action    =connected_event.action 

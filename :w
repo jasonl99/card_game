@@ -27,35 +27,16 @@ div#stats-table > div.header {
   padding: 5px;
 }
 
-div#stats-table > div.header > div {
-  display: flex;
-}
-
-div#stats-table > div.data {
-  display: flex;
-  flex-direction: column;
-}
-
-div#stats-table > div > div[data-item] {
+div#stats-table div[data-item] {
+  border-bottom: 1px solid black;
   display: flex;
 }
 
 div#stats-table span {
-  flex: 1 1; 
+  flex: 1; 
 }
 
-div#stats-table span.game {
-  flex-basis: 10%;
-  flex-shrink: 1;
-}
-div#stats-table span.connections {
-  flex-basis: 1%;
-  flex-shrink: 5;
-}
-
-div#stats-table > div > div[data-item]:nth-child(even) {
-  background-color: #f2f2f2
-}
+tr:nth-child(even){background-color: #f2f2f2}
 
 #stats > span.cards-remaining {
   float: right;
