@@ -38,6 +38,7 @@ module CardGame
   get "/stats" do |context|
     javascript, global_stats = GlobalStats.preload(name: "global_stats", session_id: context.session.id, create: true)
     if global_stats
+      global_stats.update_stats
       render "src/card_game/stats.slang"
     end
     # javascript, card_game1 = CardGame.preload(name: game1, session_id: context.session.id, create: true)

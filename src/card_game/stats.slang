@@ -12,12 +12,8 @@ html
           tr
             th Game
             th Connections
+            th Last Connected
             th Players
 
         tbody
-        - global_stats.as(GlobalStats).game_stats.each do |game, values|
-          tr
-            td = game
-            td = values["connections"]
-            td = values["players"]
-      == global_stats.children.values.map(&.as(GameStat)).map(&.content).join
+          == global_stats.items.values.map(&.as(GameStat)).map(&.table_row).join
