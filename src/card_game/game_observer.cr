@@ -1,18 +1,15 @@
 require "markdown"
 module CardGame
 
-  class GameObserver < Lattice::Connected::Container(String)
-    @max_tems = 25
-    def on_event( connected_event )
-      if connected_event.session_id && (session = Session.get connected_event.session_id.as(String))
+  class GameObserver < Lattice::Connected::StaticBuffer
+    @max_items = 20 
+    # When an event occurs, render it and add the rendered content
+    def on_event( event, speaker )
+      if event.session_id && (session = Session.get event.session_id.as(String))
          event_user = session.string?("name") || ""
       end
-      content = render "./src/card_game/game_observer.slang"
-      @items << content
-      insert({"id"=>dom_id, "value"=>content})
+      add_content render "./src/card_game/game_observer.slang"
     end
-    def content
-      @items.values.join
-    end
+
   end
 end

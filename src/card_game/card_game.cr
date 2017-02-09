@@ -7,27 +7,28 @@ module CardGame
     property hand = [] of String
     property url : String?
     property deck : Array(String) = new_deck
+    @chat_room : ChatRoom?
+    @game_observer : GameObserver?
 
 
     def content
       render "./src/card_game/card_game.slang"
     end
 
+    def chat_room : ChatRoom
+      @chat_room ||= ChatRoom.new("ChatRoom-#{dom_id}")
+    end
+
+    def game_observer : GameObserver
+      @game_observer ||= GameObserver.new("GameObserver-#{dom_id}")
+    end
+
     def after_initialize
       (1..5).each {|c| hand << draw_card}
-      add_child "chat_room", ChatRoom.child_of(creator: self,  dom_id: dom_id)
-      add_child "game_observer", GameObserver.child_of(creator: self, dom_id: dom_id)
       add_observer game_observer
       chat_room.add_observer game_observer
     end
 
-    def game_observer
-      @children["game_observer"].as(GameObserver)
-    end
-
-    def chat_room
-      @children["chat_room"].as(ChatRoom)
-    end
 
     def card_image(card)
       "/images/#{card.gsub(" ","_").downcase}.png"

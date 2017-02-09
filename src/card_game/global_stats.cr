@@ -1,6 +1,6 @@
 module CardGame
-  class GameStat < Lattice::Connected::WebObject
 
+  class GameStat < Lattice::Connected::WebObject
     property players : String?
     property connections = 0
     property game : String?
@@ -8,37 +8,31 @@ module CardGame
 
     def set(@game, @connections, @players, @last_connected)
       game_id = game.split(" ").last[1..-2] # the databse should have this directly
-      puts "In GameStat.set"
-      puts "Looking for game_id: #{game_id} in GameStat"
       if (game = CardGame.from_dom_id( game_id ) )
         game.add_observer(self)
       end
     end
 
-    def observer(talker, dom_item, action, session, socket, direction)
-      puts "GameStat ovserved something"
-    end
-
-    def connections=(val)    
-      if (parent = @creator)
-        @connections=val
-        update({"id"=>dom_id, "value"=>content})
-        update_attribute({"id"=>dom_id, "attribute"=>"style", "value"=>"order: #{-(parent.version += 1)}"})
+    #FIXME need a update_or_create
+    def on_event( event, speaker )
+      puts "GameStat observed something"
+      if @creator
+        sockets = @creator.as(Lattice::Connected::WebObject).subscribers
+        @creator.as(Lattice::Connected::DynamicBuffer).add_or_update_content self
       end
     end
-    
+
+    def value
+      render "./src/card_game/game_stat_value.slang"
+    end
+
     def content
       render "./src/card_game/game_stat.slang"
     end
 
   end
 
-  class GlobalStats < Lattice::Connected::Container(GameStat)
-    @max_items = 25
-
-    def content
-      @items.values.map(&.content).join
-    end
+  class GlobalStats < Lattice::Connected::DynamicBuffer
 
     def update_users
       update_stats
@@ -60,8 +54,9 @@ module CardGame
           players = rs.read(String)
           connections = rs.read(Int32)
           last_connected = rs.read(String)
-          item = GameStat.child_of(self, dom_id)
+          item = GameStat.child_of(self, "#{dom_id}-#{game}" )
           item.set game, connections, players, last_connected
+
           @items << item
         end
       end

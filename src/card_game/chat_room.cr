@@ -1,13 +1,10 @@
 require "./chat_message"
 module CardGame
-  class ChatRoom < Lattice::Connected::WebObject
-    MAX_MESSAGES = 5
-    @messages = Lattice::RingBuffer(ChatMessage).new(size: MAX_MESSAGES)
-    property messages
+  class ChatRoom < Lattice::Connected::StaticBuffer
+    @max_items = 5
 
     def send_chat(chat_message : ChatMessage)
-      messages << chat_message
-      insert({"id"=>"#{dom_id}-message-holder", "value"=>chat_message.content})
+      add_content new_content: chat_message.content, dom_id: "#{dom_id}-message-holder"
     end
 
     def subscribed(session_id : String, socket : HTTP::WebSocket)
@@ -27,7 +24,7 @@ module CardGame
     end
 
     def rendered_messages
-      messages.values.map(&.content).join("\n")
+      @items.values.join
     end
 
 		def display_form
