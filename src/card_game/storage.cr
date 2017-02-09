@@ -3,6 +3,7 @@ require "sqlite3"
 module CardGame
   class Storage
     @@file = "sqlite3:./card_game.db"
+    create
     @@connection : DB::Database = DB.open(@@file)
 
     def self.connection
@@ -21,7 +22,6 @@ module CardGame
         connection.exec "create table page_hit (page text not null, occurred timestamp not null default (strftime('%s','now')))"
         connection.exec "insert into settings values (?,?)", "Initialized", Time.now
       rescue
-        puts "Error with db"
       end
     end
 
