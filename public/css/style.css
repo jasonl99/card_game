@@ -2,6 +2,60 @@ body {
   position: relative;
   font-family: Andale Mono, monospace;
 }
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    border: 1px solid #ddd;
+}
+
+thead > tr {
+  border-bottom: 1px solid gray;
+}
+th, td {
+    border: none;
+    text-align: left;
+    padding: 8px;
+}
+
+div#stats-table {
+}
+
+div#stats-table > div.header {
+  background-color: rgba(100,100,100,0.25);
+  border-bottom: 1px solid black;
+  padding: 5px;
+}
+
+div#stats-table > div.header > div {
+  display: flex;
+}
+
+div#stats-table > div.data {
+  display: flex;
+  flex-direction: column;
+}
+
+div#stats-table > div > div[data-item] {
+  display: flex;
+}
+
+div#stats-table span {
+  flex: 1 1; 
+}
+
+div#stats-table span.game {
+  flex-basis: 10%;
+  flex-shrink: 1;
+}
+div#stats-table span.connections {
+  flex-basis: 1%;
+  flex-shrink: 5;
+}
+
+div#stats-table > div > div[data-item]:nth-child(even) {
+  background-color: #f2f2f2
+}
 
 #stats > span.cards-remaining {
   float: right;

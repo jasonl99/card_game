@@ -1,5 +1,5 @@
-card_game.db
 cardgame
+*.db
 *.log
 /doc/
 /lib/

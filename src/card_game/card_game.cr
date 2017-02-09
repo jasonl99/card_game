@@ -4,63 +4,71 @@ module CardGame
   class CardGame < Lattice::Connected::WebObject
     VALUES = %w(2 3 4 5 6 7 8 9 10 Jack Queen King Ace)
     SUITS  = %w(Hearts Diamonds Spades Clubs)
-    @chat_room = ChatRoom.new(dom_id)
-    @game_observer = GameObserver.new(dom_id)
-    @hand = [] of String
-    property chat_room, hand, game_observer
+    property hand = [] of String
     property url : String?
     property deck : Array(String) = new_deck
-
+    @chat_room : ChatRoom?
+    @game_observer : GameObserver?
 
 
     def content
       render "./src/card_game/card_game.slang"
     end
 
-    def initialize(@name)
-      (1..5).each {|c| hand << draw_card}
-      # @chat_room.add_observer(self)  ## this is not a EventObserver yet
-      chat_room.add_observer @game_observer
-      super
-      add_observer @game_observer
+    def chat_room : ChatRoom
+      @chat_room ||= ChatRoom.new("ChatRoom-#{dom_id}")
     end
+
+    def game_observer : GameObserver
+      @game_observer ||= GameObserver.new("GameObserver-#{dom_id}")
+    end
+
+    def after_initialize
+      (1..5).each {|c| hand << draw_card}
+      add_observer game_observer
+      chat_room.add_observer game_observer
+    end
+
 
     def card_image(card)
       "/images/#{card.gsub(" ","_").downcase}.png"
     end
 
-    # action comes in the form of dom=>param
-    # { "cardgame-1234-card-5" => {"clicked"=>"true"}}
     def subscriber_action(data_item : String, action : Hash(String,JSON::Type), session_id : String, socket)
-      puts "In #{self.class.to_s.split("::").last.colorize(:white).on(:green).to_s}: data_item: #{data_item.colorize(:green).to_s} action #{action.inspect.colorize(:yellow).to_s}"
-      # msg = "In #{self.class.to_s.split("::").last.colorize(:white).on(:green).to_s}: data_item: #{data_item.colorize(:green).to_s} action #{action.inspect.colorize(:yellow).to_s}"
-      # Lattice::Connected::SOCKET_LOGGER.debug msg
       begin
         player_name = Session.get(session_id).as(Session).string("name")  # we assume that this has been validated and a session exists and name is set
       rescue
         player_name = "Anon"
       end
       if action["action"]=="click" && (card = index_from(source: data_item, max: hand.size-1))
-        # player_name = Session.get(session_id).as(Session).string("name")  # we assume that this has been validated and a session exists and name is set
         hand[card] = draw_card
         update_attribute({"id"=>data_item, "attribute"=>"src", "value"=>card_image hand[card]})
         update({"id"=>"#{dom_id}-cards-remaining", "value"=>deck.size.to_s})
-        chat_room.send_chat ChatMessage.new(name: player_name, message: hand[card])
+        chat_room.send_chat ChatMessage.new name: player_name, message: hand[card]
       end
 
-      # acted_upon = action.first_key
-      # action_taken = action.first_value.as(Hash(String,JSON::Type))  #FIXME need to make sure this is typed correctly as a parameter
-      # if action_taken.first_key=="click" && acted_upon.match(/card-[0-4]/) && (card = index_from( source: acted_upon, max: hand.size - 1))
-      #   player_name = Session.get(session_id).as(Session).string("name")  # we assume that this has been validated and a session exists and name is set
-      #   hand[card] = draw_card
-      #   update_attribute({"id"=>acted_upon, "attribute"=>"src", "value"=>card_image hand[card]})
-      #   update({"id"=>"#{dom_id}-cards-remaining", "value"=>deck.size})
-      #   chat_room.send ChatMessage.new(name: player_name, time: Time.now, mesg: hand[card])
-      # end
     end
 
     def subscribed( session_id, socket)
       chat_room.subscribe(socket, session_id)  ##
+      if (session = Session.get session_id) && (player_name = session.string?("name") )
+        Storage.connection.exec "insert into player_game (player, game) values (?,?)", player_name, name
+      end
+
+      # create and broadcast a subscribed event to listeners
+      emit_event Lattice::Connected::DefaultEvent.new(
+        event_type: "subscribed",
+        sender: self,
+        dom_item: dom_id,
+        action: nil,
+        session_id: session_id,
+        socket: socket,
+        direction: "In"
+        )
+
+      # if (gs = GameStat.find_child(dom_id))
+      #   gs.connections += 1
+      # end
     end
 
     def draw_card
