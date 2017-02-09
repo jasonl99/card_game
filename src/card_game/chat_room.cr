@@ -1,7 +1,13 @@
 require "./chat_message"
 module CardGame
   class ChatRoom < Lattice::Connected::StaticBuffer
+
     @max_items = 5
+
+    def self.on_event(event, sender)
+      puts "Chatroom override on_event"
+      super
+    end
 
     def send_chat(chat_message : ChatMessage)
       add_content new_content: chat_message.content, dom_id: "#{dom_id}-message-holder"
