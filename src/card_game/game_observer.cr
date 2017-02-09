@@ -1,4 +1,3 @@
-require "markdown"
 module CardGame
 
   class GameObserver < Lattice::Connected::StaticBuffer
