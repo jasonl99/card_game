@@ -7,17 +7,15 @@ module CardGame
     property last_connected : String?
 
     def set(@game, @connections, @players, @last_connected)
-      game_id = game.split(" ").last[1..-2] # the databse should have this directly
-      if (game = CardGame.from_dom_id( game_id ) )
-        puts "Found game #{game_id}"
-        game.add_observer(self)
+      if (card_game = CardGame.find( game ) )
+        card_game.add_observer(self)
       end
     end
 
     #FIXME need a update_or_create
     def on_event( event, speaker )
       puts "GameStat observed something"
-      if @creator
+      if ["subscribed"].includes? event.event_type
         sockets = @creator.as(Lattice::Connected::WebObject).subscribers
         @creator.as(Lattice::Connected::DynamicBuffer).add_or_update_content self
       end

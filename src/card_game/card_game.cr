@@ -52,8 +52,20 @@ module CardGame
     def subscribed( session_id, socket)
       chat_room.subscribe(socket, session_id)  ##
       if (session = Session.get session_id) && (player_name = session.string?("name") )
-        Storage.connection.exec "insert into player_game (player, game) values (?,?)", player_name, "#{name} (#{dom_id})"
+        Storage.connection.exec "insert into player_game (player, game) values (?,?)", player_name, name
       end
+
+      # create and broadcast a subscribed event to listeners
+      emit_event Lattice::Connected::DefaultEvent.new(
+        event_type: "subscribed",
+        sender: self,
+        dom_item: dom_id,
+        action: nil,
+        session_id: session_id,
+        socket: socket,
+        direction: "In"
+        )
+
       # if (gs = GameStat.find_child(dom_id))
       #   gs.connections += 1
       # end
