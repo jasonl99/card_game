@@ -9,6 +9,7 @@ module CardGame
     def set(@game, @connections, @players, @last_connected)
       game_id = game.split(" ").last[1..-2] # the databse should have this directly
       if (game = CardGame.from_dom_id( game_id ) )
+        puts "Found game #{game_id}"
         game.add_observer(self)
       end
     end
