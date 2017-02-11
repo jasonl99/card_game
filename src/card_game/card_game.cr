@@ -44,7 +44,7 @@ module CardGame
       if event.message
         message = event.message.as(Hash(String,JSON::Type))
         action = message["action"]
-        if action=="click" && (card = index_from(source: event.dom_item, max: hand.size-1))
+        if event.event_type == "subscriber" && action=="click" && (card = index_from(source: event.dom_item, max: hand.size-1))
           hand[card] = draw_card
           update_attribute({"id"=>event.dom_item, "attribute"=>"src", "value"=>card_image hand[card]})
           update({"id"=>"#{dom_id}-cards-remaining", "value"=>deck.size.to_s})
