@@ -34,20 +34,34 @@ module CardGame
       "/images/#{card.gsub(" ","_").downcase}.png"
     end
 
-    def subscriber_action(data_item : String, action : Hash(String,JSON::Type), session_id : String, socket)
+    def on_event(event, sender)
       begin
-        player_name = Session.get(session_id).as(Session).string("name")  # we assume that this has been validated and a session exists and name is set
+        player_name = Session.get(event.session_id.as(String)).as(Session).string("name")  # we assume that this has been validated and a session exists and name is set
       rescue
         player_name = "Anon"
       end
-      if action["action"]=="click" && (card = index_from(source: data_item, max: hand.size-1))
-        hand[card] = draw_card
-        update_attribute({"id"=>data_item, "attribute"=>"src", "value"=>card_image hand[card]})
-        update({"id"=>"#{dom_id}-cards-remaining", "value"=>deck.size.to_s})
-        chat_room.send_chat ChatMessage.new name: player_name, message: hand[card]
-      end
-
+      # if event.message["action"].as(String)=="click" && (card = index_from(source: event.dom_item, max: hand.size-1))
+      #   hand[card] = draw_card
+      #   update_attribute({"id"=>event.dom_item, "attribute"=>"src", "value"=>card_image hand[card]})
+      #   update({"id"=>"#{dom_id}-cards-remaining", "value"=>deck.size.to_s})
+      #   chat_room.send_chat ChatMessage.new name: player_name, message: hand[card]
+      # end
     end
+
+    # def subscriber_action(data_item : String, action : Hash(String,JSON::Type), session_id : String, socket)
+      # begin
+      #   player_name = Session.get(session_id).as(Session).string("name")  # we assume that this has been validated and a session exists and name is set
+      # rescue
+      #   player_name = "Anon"
+      # end
+    #   if action["action"]=="click" && (card = index_from(source: data_item, max: hand.size-1))
+    #     hand[card] = draw_card
+    #     update_attribute({"id"=>data_item, "attribute"=>"src", "value"=>card_image hand[card]})
+    #     update({"id"=>"#{dom_id}-cards-remaining", "value"=>deck.size.to_s})
+    #     chat_room.send_chat ChatMessage.new name: player_name, message: hand[card]
+    #   end
+
+    # end
 
     def subscribed( session_id, socket)
       chat_room.subscribe(socket, session_id)  ##
@@ -60,7 +74,7 @@ module CardGame
         event_type: "subscribed",
         sender: self,
         dom_item: dom_id,
-        action: nil,
+        message: nil,
         session_id: session_id,
         socket: socket,
         direction: "In"

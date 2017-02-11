@@ -15,14 +15,33 @@ module CardGame
       end
     end
 
-    def subscriber_action(dom_item : String, action : Hash(String,JSON::Type), session_id : String?, socket)
+    def on_event(event, sender)
       player_name = "Anon"
-      player_name = Session.get(session_id.as(String)).as(Session).string?("name") if session_id
-      if action["action"] == "submit" && player_name
-        params = action["params"].as(Hash(String,JSON::Type))
-        send_chat ChatMessage.new name: player_name, message: params["new-msg"].as(String)
-      end
+      player_name = Session.get(event.session_id.as(String)).as(Session).string?("name") if event.session_id
+      message = event.message.as(Hash(String,JSON::Type))
+      puts "Chatroom message #{event.direction} (#{message.class} #{message}".colorize(:blue).on(:white)
+      action = message["action"]
+      puts "Chatroom action (#{action.class}): #{action}"
+        # action = message["action"] #.as(Hash(String, String | Hash(String,JSON::Type)))
+        # puts action
+        # puts action.class
+        # puts action
+        # puts action.class
+      # puts "Chatroom action (#{action.class} #{action}".colorize(:blue).on(:white)
+      # if action == "submit" && player_name
+      #   params = message["params"].as(Hash(String,JSON::Type))
+      #   send_chat ChatMessage.new name: player_name, message: params["new-msg"].as(String)
+      # end
     end
+
+    # def subscriber_action(dom_item : String, action : Hash(String,JSON::Type), session_id : String?, socket)
+    #   player_name = "Anon"
+    #   player_name = Session.get(session_id.as(String)).as(Session).string?("name") if session_id
+    #   if action["action"] == "submit" && player_name
+    #     params = action["params"].as(Hash(String,JSON::Type))
+    #     send_chat ChatMessage.new name: player_name, message: params["new-msg"].as(String)
+    #   end
+    # end
 
     def rendered_messages
       @items.values.join
