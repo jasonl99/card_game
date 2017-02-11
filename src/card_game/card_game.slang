@@ -9,7 +9,8 @@ div data-item=dom_id data-subscribe=""
     span.game-name = "game: #{name}"
     span.cards-remaining
       | Cards Remaining in deck: 
-      span data-item="#{dom_id}-cards-remaining"
+      - # workaround: Slang can't handle quotes in dom_id(""), so use dom_id(%{})
+      span data-item="#{dom_id(%{cards-remaining})}"
         = deck.size
 h3 GameObserver (events from server's perspective)
 div.observed-events

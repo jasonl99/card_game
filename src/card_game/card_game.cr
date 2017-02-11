@@ -35,6 +35,9 @@ module CardGame
     end
 
     def on_event(event, sender)
+      comp_id = component_id(event.dom_item)
+      puts "Component id is #{comp_id || "empty"}"
+      puts "Component index is #{component_index(comp_id) || "empty"}"
       begin
         player_name = Session.get(event.session_id.as(String)).as(Session).string("name")  # we assume that this has been validated and a session exists and name is set
       rescue
@@ -47,7 +50,8 @@ module CardGame
         if event.event_type == "subscriber" && action=="click" && (card = index_from(source: event.dom_item, max: hand.size-1))
           hand[card] = draw_card
           update_attribute({"id"=>event.dom_item, "attribute"=>"src", "value"=>card_image hand[card]})
-          update({"id"=>"#{dom_id}-cards-remaining", "value"=>deck.size.to_s})
+          update_component "cards-remaining", deck.size
+          # update({"id"=>"#{dom_id}-cards-remaining", "value"=>deck.size.to_s})
           chat_room.send_chat ChatMessage.new name: player_name, message: hand[card]
         end
       end
