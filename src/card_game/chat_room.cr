@@ -21,17 +21,11 @@ module CardGame
       message = event.message.as(Hash(String,JSON::Type))
       puts "Chatroom message #{event.direction} (#{message.class} #{message}".colorize(:blue).on(:white)
       action = message["action"]
-      puts "Chatroom action (#{action.class}): #{action}"
-        # action = message["action"] #.as(Hash(String, String | Hash(String,JSON::Type)))
-        # puts action
-        # puts action.class
-        # puts action
-        # puts action.class
-      # puts "Chatroom action (#{action.class} #{action}".colorize(:blue).on(:white)
-      # if action == "submit" && player_name
-      #   params = message["params"].as(Hash(String,JSON::Type))
-      #   send_chat ChatMessage.new name: player_name, message: params["new-msg"].as(String)
-      # end
+      puts "Chatroom action (#{action.class}): #{action}".colorize(:blue).on(:white)
+      if action == "submit" && player_name
+        params = message["params"].as(Hash(String,JSON::Type))
+        send_chat ChatMessage.new name: player_name, message: params["new-msg"].as(String)
+      end
     end
 
     # def subscriber_action(dom_item : String, action : Hash(String,JSON::Type), session_id : String?, socket)

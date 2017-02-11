@@ -40,6 +40,30 @@ module CardGame
       rescue
         player_name = "Anon"
       end
+      puts "CardGame on_event #{event.direction} #{(event.event_type)} message #{event.message.class} : #{event.message}".colorize(:red).on(:white)
+      if event.message
+        message = event.message.as(Hash(String,JSON::Type))
+        action = message["action"]
+        if action=="click" && (card = index_from(source: event.dom_item, max: hand.size-1))
+          hand[card] = draw_card
+          update_attribute({"id"=>event.dom_item, "attribute"=>"src", "value"=>card_image hand[card]})
+          update({"id"=>"#{dom_id}-cards-remaining", "value"=>deck.size.to_s})
+          chat_room.send_chat ChatMessage.new name: player_name, message: hand[card]
+        end
+      end
+
+    # def on_event(event, sender)
+    #   player_name = "Anon"
+    #   player_name = Session.get(event.session_id.as(String)).as(Session).string?("name") if event.session_id
+    #   puts "Chatroom message #{event.direction} (#{message.class} #{message}".colorize(:blue).on(:white)
+    #   puts "Chatroom action (#{action.class}): #{action}".colorize(:blue).on(:white)
+    #   if action == "submit" && player_name
+    #     params = message["params"].as(Hash(String,JSON::Type))
+    #     send_chat ChatMessage.new name: player_name, message: params["new-msg"].as(String)
+    #   end
+    # end
+
+
       # if event.message["action"].as(String)=="click" && (card = index_from(source: event.dom_item, max: hand.size-1))
       #   hand[card] = draw_card
       #   update_attribute({"id"=>event.dom_item, "attribute"=>"src", "value"=>card_image hand[card]})
