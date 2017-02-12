@@ -2,6 +2,7 @@ require "./chat_room"
 require "./game_observer"
 module CardGame
   class CardGame < Lattice::Connected::WebObject
+    puts "CardGame instance_sizeof: #{instance_sizeof(CardGame)}"
     VALUES = %w(2 3 4 5 6 7 8 9 10 Jack Queen King Ace)
     SUITS  = %w(Hearts Diamonds Spades Clubs)
     property hand = [] of String
@@ -29,67 +30,31 @@ module CardGame
       chat_room.add_observer game_observer
     end
 
-
     def card_image(card)
       "/images/#{card.gsub(" ","_").downcase}.png"
     end
 
     def on_event(event, sender)
-      comp_id = component_id(event.dom_item)
-      puts "Component id is #{comp_id || "empty"}"
-      puts "Component index is #{component_index(comp_id) || "empty"}"
+      component_id = component_id(event.dom_item)
+      card_index = component_index(component_id)
       begin
         player_name = Session.get(event.session_id.as(String)).as(Session).string("name")  # we assume that this has been validated and a session exists and name is set
       rescue
         player_name = "Anon"
       end
-      puts "CardGame on_event #{event.direction} #{(event.event_type)} message #{event.message.class} : #{event.message}".colorize(:red).on(:white)
       if event.message
         message = event.message.as(Hash(String,JSON::Type))
         action = message["action"]
-        if event.event_type == "subscriber" && action=="click" && (card = index_from(source: event.dom_item, max: hand.size-1))
-          hand[card] = draw_card
-          update_attribute({"id"=>event.dom_item, "attribute"=>"src", "value"=>card_image hand[card]})
+        if card_index && event.event_type == "subscriber" && action=="click" 
+          hand[card_index] = draw_card
           update_component "cards-remaining", deck.size
-          # update({"id"=>"#{dom_id}-cards-remaining", "value"=>deck.size.to_s})
-          chat_room.send_chat ChatMessage.new name: player_name, message: hand[card]
+          update_attribute({"id"=>dom_id(component_id), "attribute"=>"src", "value"=>card_image hand[card_index]})
+          chat_room.send_chat ChatMessage.new name: player_name, message: hand[card_index]
         end
       end
 
-    # def on_event(event, sender)
-    #   player_name = "Anon"
-    #   player_name = Session.get(event.session_id.as(String)).as(Session).string?("name") if event.session_id
-    #   puts "Chatroom message #{event.direction} (#{message.class} #{message}".colorize(:blue).on(:white)
-    #   puts "Chatroom action (#{action.class}): #{action}".colorize(:blue).on(:white)
-    #   if action == "submit" && player_name
-    #     params = message["params"].as(Hash(String,JSON::Type))
-    #     send_chat ChatMessage.new name: player_name, message: params["new-msg"].as(String)
-    #   end
-    # end
-
-
-      # if event.message["action"].as(String)=="click" && (card = index_from(source: event.dom_item, max: hand.size-1))
-      #   hand[card] = draw_card
-      #   update_attribute({"id"=>event.dom_item, "attribute"=>"src", "value"=>card_image hand[card]})
-      #   update({"id"=>"#{dom_id}-cards-remaining", "value"=>deck.size.to_s})
-      #   chat_room.send_chat ChatMessage.new name: player_name, message: hand[card]
-      # end
     end
 
-    # def subscriber_action(data_item : String, action : Hash(String,JSON::Type), session_id : String, socket)
-      # begin
-      #   player_name = Session.get(session_id).as(Session).string("name")  # we assume that this has been validated and a session exists and name is set
-      # rescue
-      #   player_name = "Anon"
-      # end
-    #   if action["action"]=="click" && (card = index_from(source: data_item, max: hand.size-1))
-    #     hand[card] = draw_card
-    #     update_attribute({"id"=>data_item, "attribute"=>"src", "value"=>card_image hand[card]})
-    #     update({"id"=>"#{dom_id}-cards-remaining", "value"=>deck.size.to_s})
-    #     chat_room.send_chat ChatMessage.new name: player_name, message: hand[card]
-    #   end
-
-    # end
 
     def subscribed( session_id, socket)
       chat_room.subscribe(socket, session_id)  ##
@@ -108,16 +73,13 @@ module CardGame
         direction: "In"
         )
 
-      # if (gs = GameStat.find_child(dom_id))
-      #   gs.connections += 1
-      # end
     end
 
     def draw_card
       self.deck = new_deck if self.deck.size == 0
       card = deck.sample
       deck.delete card
-      card  # OPTIMIZE does delete already return this?
+      card
     end
 
     def new_deck : Array(String)
