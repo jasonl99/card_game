@@ -9,6 +9,40 @@ table {
     border: 1px solid #ddd;
 }
 
+div.fixed-stats:hover {
+  background: rgba(0,0,0,0.15);
+  font-style: bold;
+  color: black;
+}
+div.fixed-stats {
+  font-family: monospace;
+  background: rgba(0,0,0,0.05);
+  color: rgba(0,0,0,0.45);
+  position: absolute;
+  font-size: 1em;
+  right: 0;
+  top: 0;
+  padding: 1em;
+}
+div.stat {
+  display: flex;
+  justify-content: flex-end;
+}
+div.stat > span.name {
+  display: inline-block;
+  text-align: right;
+}
+
+div.stat > span.name:after {
+  content: ": ";
+}
+
+div.stat > span.value {
+  display: inline-block;
+  text-align: right;
+  min-width: 3em;
+}
+
 thead > tr {
   border-bottom: 1px solid gray;
 }

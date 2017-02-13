@@ -1,3 +1,5 @@
+div.fixed-stats data-item=::CardGame.master_observer.dom_id
+  == ::CardGame.master_observer.content
 div data-item=dom_id data-subscribe=""
   div#hand
     - hand.each_with_index do |card,idx|
@@ -9,7 +11,8 @@ div data-item=dom_id data-subscribe=""
     span.game-name = "game: #{name}"
     span.cards-remaining
       | Cards Remaining in deck: 
-      span data-item="#{dom_id}-cards-remaining"
+      - # workaround: Slang can't handle quotes in dom_id(""), so use dom_id(%{})
+      span data-item="#{dom_id(%[cards-remaining])}"
         = deck.size
 h3 GameObserver (events from server's perspective)
 div.observed-events
