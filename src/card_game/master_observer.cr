@@ -1,8 +1,14 @@
+
 module CardGame
-  #TODO this might be better as a class rather than an instance
+  # This class monitors all games by observing events at the CardGame level
+  # so all events across all card games come in.
   class MasterObserver < Lattice::Connected::WebObject
 
     @game_stats = Hash(String, String | Int32 ).new
+
+    def after_initialize
+      CardGame.add_observer(self)
+    end
 
     def game_stats
       @game_stats

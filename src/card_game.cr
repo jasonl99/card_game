@@ -1,4 +1,3 @@
-require "faker"
 require "kemal"
 require "kilt/slang"
 require "colorize"
@@ -22,7 +21,6 @@ module CardGame
 
   @@master_observer = MasterObserver.new name: "MasterObserver"
   class_getter master_observer
-  CardGame.add_observer(@@master_observer)
 
   Session.config do |config|
     config.cookie_name = "session_id"

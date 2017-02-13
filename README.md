@@ -1,25 +1,31 @@
 # card_game
 
 This is a demo app for [lattice-core](https://github.com/jasonl99/lattice-core) which is a framework for crystal I'm working on that is still
-very much in the proof-of-concept stage.  The intent is to really show how powerful
-a WebSocket-first framework can be.  Kemal serves as an excellent base, and
-crystal's ruby-like syntax with native speed brings everything together.
+very much in the proof-of-concept stage.  The intent is to really show how powerful a WebSocket-first framework can be.  Kemal serves as an excellent base, and crystal's ruby-like syntax with native speed brings everything together.
 
 If you haven't spent some time investigation [crystal](crystal-lang.org), please take a look.  It is an _amazing_ language with an excellent library.
 
 ## Installation
 
-clone this repo and run `shards install` 
+```
+git clone git@github.com:jasonl99/card_game.git
+cd card_game
+shards install
+crystal src/card_game.cr
+```
 
 ## Usage
 
-Run the app in a terminal window with `crystal src/card_game.cr`
-Open a browser and go to `localhost:3000/cardgame/abc` where `abc` becomes a new game at that address.  
-Use Chrome, Firefox, Safari, or whatever browser you'd like at the same url to show more than one session accessing a game.  Imagine each browser is a different user in a different location.
+Open a browser and go to `localhost:3000/cardgame/abc` where `abc` becomes a new game at that address.
+Use Chrome, Firefox, Safari, or whatever browser you'd like at the same url to show more than one session accessing a game.  Imagine each browser is a different user in a different location.  Once a game is created, it stays in server memory (garbage collection is in progress on lattice-core.)
 
-For demonstration purposes, each session is given a random username (so you'll have two different names if you have Chrome and Firefox both accessing the same game, which is cool, because it really shows how communication occurs between _all_ game users)
+For demonstration purposes, each session is given a random username (so you'll have two different names if you have Chrome and Firefox both accessing the same game, which is cool, because it really shows how communication occurs between _all_ game users).  
+
+The upper right corner also illustrates some of the power that lattice-core can provide.  It's a statistical summary of how many card games are running across the server, and how many of those games have no subscribers (ultimately the target for garbage collection).
 
 #Walk Through
+
+_These screenshots are bit outdated.  I will update them soon_
 
 First things first.  This demo _emulates_ a card game.  Imagine if you were playing poker
 online against a few other people. Each of you is shown a deck.   But there's one hand, which all players see and interact with.  If the deck runs out, a new deck is shuffled.
