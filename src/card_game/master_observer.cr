@@ -18,8 +18,11 @@ module CardGame
       total_subs = 0
       empty_games = 0
       @game_stats["Games"] = CardGame.instances.size
-      CardGame.instances.each do |(signature, name)|
-        if (game = CardGame::INSTANCES[Base62.int_digest name])
+      puts "@@instances: #{CardGame.instances}"
+      puts "INSTANCES.keys #{CardGame::INSTANCES.keys}"
+      CardGame.instances.each do |(instance_name, instance_int)|
+        puts "looking for game #{instance_name} with instance signature #{instance_int}"
+        if (game = CardGame::INSTANCES[instance_int])
           empty_games += 1 if game.subscribers.size == 0
           total_subs += game.subscribers.size
         end
@@ -40,7 +43,6 @@ module CardGame
       @game_stats.each do |(k,v)|
         update_component k.gsub(" ","-").downcase, v
       end
-      #update({"id"=>dom_id, "value"=>content})
     end
   end
 end

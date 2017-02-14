@@ -8,8 +8,8 @@ dependencies:
   faker:
     github: askn/faker
   lattice-core:
-    github: jasonl99/lattice-core
-    #path: /home/jason/crystal/lattice-core
+    #github: jasonl99/lattice-core
+    path: /home/jason/crystal/lattice-core
 
   sqlite3:
     github: crystal-lang/crystal-sqlite3

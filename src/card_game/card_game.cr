@@ -2,7 +2,6 @@ require "./chat_room"
 require "./game_observer"
 module CardGame
   class CardGame < Lattice::Connected::WebObject
-    puts "CardGame instance_sizeof: #{instance_sizeof(CardGame)}"
     VALUES = %w(2 3 4 5 6 7 8 9 10 Jack Queen King Ace)
     SUITS  = %w(Hearts Diamonds Spades Clubs)
     property hand = [] of String
@@ -57,23 +56,18 @@ module CardGame
     end
 
 
+    def self.from_dom_id (dom : String)
+      puts "from_dom_item looking for a #{klass} with signature #{signature}"
+      puts CardGame.instances
+      puts CardGame::INSTANCES.keys
+      super
+    end
+
     def subscribed( session_id, socket)
       chat_room.subscribe(socket, session_id)  ##
       if (session = Session.get session_id) && (player_name = session.string?("name") )
         Storage.connection.exec "insert into player_game (player, game) values (?,?)", player_name, name
       end
-
-      # create and broadcast a subscribed event to listeners
-      emit_event Lattice::Connected::DefaultEvent.new(
-        event_type: "subscribed",
-        sender: self,
-        dom_item: dom_id,
-        message: nil,
-        session_id: session_id,
-        socket: socket,
-        direction: "In"
-        )
-
     end
 
     def draw_card

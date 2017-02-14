@@ -26,7 +26,7 @@ shards:
 
   lattice-core:
     path: /home/jason/crystal/lattice-core
-    commit: 
+    version: 0.11.0
 
   multipart:
     github: RX14/multipart.cr
