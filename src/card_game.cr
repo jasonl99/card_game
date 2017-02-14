@@ -61,9 +61,14 @@ module CardGame
       context.session.string("name",user_name)
     end
     game_name = context.params.url["game"]
-    javascript, card_game = CardGame.preload(name: game_name, session_id: context.session.id, create: true)
-    games = [card_game].compact
-    render "src/card_game/games.slang"
+    begin
+      javascript, card_game = CardGame.preload(name: game_name, session_id: context.session.id, create: true)
+      games = [card_game].compact
+      render "src/card_game/games.slang"
+    rescue Lattice::Connected::TooManyInstances
+      "There are too many games in progress.  Please try again later.  
+      And sorry for this crappy unformatted page."
+    end
   end
 
   Lattice::Core::Application.run
