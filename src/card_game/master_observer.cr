@@ -19,7 +19,7 @@ module CardGame
       empty_games = 0
       @game_stats["Games"] = CardGame.instances.size
       CardGame.instances.each do |(signature, name)|
-        if (game = CardGame::INSTANCES[name])
+        if (game = CardGame::INSTANCES[Base62.int_digest name])
           empty_games += 1 if game.subscribers.size == 0
           total_subs += game.subscribers.size
         end
