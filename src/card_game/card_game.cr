@@ -8,6 +8,7 @@ module CardGame
     property hand = [] of String
     property url : String?
     property deck : Array(String) = new_deck
+    @@max_instances = 3
     @chat_room : ChatRoom?
     @game_observer : GameObserver?
 
