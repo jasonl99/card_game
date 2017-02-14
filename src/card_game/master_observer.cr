@@ -24,6 +24,7 @@ module CardGame
           total_subs += game.subscribers.size
         end
       end
+      @game_stats["Maximum Subs"] = total_subs if total_subs > @game_stats.fetch("Maximum Subs",-1).to_i
       @game_stats["Empty Games"] = empty_games
       @game_stats["Total Subs"] = total_subs
       @game_stats["Total Events"] = @game_stats.fetch("Total Events",0).as(Int32) + 1
