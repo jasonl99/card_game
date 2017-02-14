@@ -9,7 +9,6 @@ dependencies:
     github: askn/faker
   lattice-core:
     github: jasonl99/lattice-core
-    branch: stability
     #path: /home/jason/crystal/lattice-core
 
   sqlite3:
