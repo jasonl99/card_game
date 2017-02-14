@@ -14,7 +14,7 @@ shards:
 
   kemal:
     github: kemalcr/kemal
-    version: 0.17.5
+    version: 0.18.0
 
   kemal-session:
     github: kemalcr/kemal-session
@@ -26,7 +26,7 @@ shards:
 
   lattice-core:
     path: /home/jason/crystal/lattice-core
-    version: 0.11.0
+    commit: 
 
   multipart:
     github: RX14/multipart.cr
@@ -38,7 +38,7 @@ shards:
 
   slang:
     github: jeromegn/slang
-    version: 1.4.1
+    commit: 6f8c5b226758faf73575d02b67a8010f8e10a0ab
 
   sqlite3:
     github: crystal-lang/crystal-sqlite3
