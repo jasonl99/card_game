@@ -11,8 +11,7 @@ module CardGame
     @chat_room : ChatRoom?
     @game_observer : GameObserver?
 
-
-    def content
+    def rendered_content
       render "./src/card_game/card_game.slang"
     end
 
@@ -25,6 +24,7 @@ module CardGame
     end
 
     def after_initialize
+      @element_type = "DIV"
       (1..5).each {|c| hand << draw_card}
       add_observer game_observer
       chat_room.add_observer game_observer

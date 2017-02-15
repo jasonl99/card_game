@@ -13,7 +13,4 @@ html
           span.header.connections Connections
           span.header.last-connected Last Subscribed
           span.header.players Players
-
-     div.data data-item=global_stats.dom_id data-subscribe="" 
-       == global_stats.content
-       /* == global_stats.items.values.map(&.as(GameStat)).map(&.content).join */
+     div.data data-item=global_stats.dom_id
