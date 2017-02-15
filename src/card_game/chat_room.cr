@@ -7,7 +7,7 @@ module CardGame
     @max_items = 5
 
     def send_chat(chat_message : ChatMessage)
-      add_content new_content: chat_message.content, dom_id: "#{dom_id}-message-holder"
+      add_content new_content: chat_message.content
     end
 
     # when a new user is subscribed, the chat input box is personalized with their name
@@ -18,6 +18,7 @@ module CardGame
         personalize = {"id"=>"#{dom_id}-chatname", "attribute"=>"value", "value"=>user_name}
         update_attribute(personalize, [socket])
       end
+      super
     end
 
     # the only event we really do anything with is an action submit (we don't even bother

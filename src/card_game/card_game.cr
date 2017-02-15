@@ -55,16 +55,9 @@ module CardGame
 
     end
 
-
-    def self.from_dom_id (dom : String)
-      puts "from_dom_item looking for a #{klass} with signature #{signature}"
-      puts CardGame.instances
-      puts CardGame::INSTANCES.keys
-      super
-    end
-
     def subscribed( session_id, socket)
       chat_room.subscribe(socket, session_id)  ##
+      game_observer.subscribe(socket, session_id)
       if (session = Session.get session_id) && (player_name = session.string?("name") )
         Storage.connection.exec "insert into player_game (player, game) values (?,?)", player_name, name
       end

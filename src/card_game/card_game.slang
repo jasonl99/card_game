@@ -22,5 +22,6 @@ div.observed-events
     span.header.sender WebObject
     span.header.dom_item DOM Target
     span.header.action Action
-div.observed-events data-item=game_observer.dom_id data-subscribe="" data-maxChildren=game_observer.max_items
+div data-item=game_observer.dom_id
+  div.observed-events data-item=game_observer.dom_id(%{items})
   == game_observer.content

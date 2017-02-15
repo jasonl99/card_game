@@ -14,7 +14,6 @@ module CardGame
 
     #FIXME need a update_or_create
     def on_event( event, speaker )
-      puts "GameStat observed something"
       if ["subscribed"].includes? event.event_type
         sockets = @creator.as(Lattice::Connected::WebObject).subscribers
         @creator.as(Lattice::Connected::DynamicBuffer).add_or_update_content self

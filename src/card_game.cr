@@ -71,7 +71,6 @@ module CardGame
     end
   end
 
-  puts "INSTANCES: #{Lattice::Connected::WebObject::INSTANCES}"
   Lattice::Core::Application.run
 
 end
