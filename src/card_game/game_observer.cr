@@ -15,7 +15,7 @@ module CardGame
     end
 
     def after_initialize
-      @element_class = "observed-events"
+      # @element_class = "observed-events"
     end
 
   end
