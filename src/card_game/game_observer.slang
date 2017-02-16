@@ -6,3 +6,4 @@ div.observed-events
     span.header.dom_item DOM Target
     span.header.action Action
 div.observed-events data-item=dom_id(%{items})
+  == item_content
