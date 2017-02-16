@@ -4,6 +4,7 @@ require "colorize"
 require "logger"
 require "faker"
 require "lattice-core"
+require "baked_file_system"
 require "./card_game/*"
 
 module CardGame
@@ -21,6 +22,15 @@ module CardGame
     config.cookie_name = "session_id"
     config.secret = "some_secret"
     config.gc_interval = 2.minutes # 2 minutes
+  end
+
+  PublicStorage.files.each do |file|
+    puts "Establish path for PublicStorage: #{file.name} / #{file.mime_type} / #{file.size}"
+    get file.path do |context|
+      context.response.headers["Cache-Control"] = "max-age=#{24*60*60}"
+      context.response.content_type = file.mime_type
+      file.read
+    end
   end
 
   get "/admin/initialize_storage" do |context|
