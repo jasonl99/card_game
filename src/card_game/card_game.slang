@@ -2,7 +2,7 @@ div#hand
   - hand.each_with_index do |card,idx|
     span.card-holder
       img.card src=card_image(card) data-item="#{dom_id}-card-#{idx}" data-event-attributes="src" data-events="click"
-== chat_room.rendered_content
+== chat_room.to_html
 div#stats
   span.game-name = "game: #{name}"
   span.cards-remaining
@@ -11,4 +11,4 @@ div#stats
     span data-item="#{dom_id(%[cards-remaining])}"
       = deck.size
 h3 GameObserver (events from server's perspective)
-== game_observer.rendered_content
+== game_observer.to_html
