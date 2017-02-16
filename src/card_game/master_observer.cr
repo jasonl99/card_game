@@ -6,6 +6,7 @@ module CardGame
     @game_stats = Hash(String, String | Int32 ).new
 
     def after_initialize
+      add_element_class "fixed-stats"
       CardGame.add_observer(self)
     end
 

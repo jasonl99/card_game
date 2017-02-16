@@ -6,7 +6,7 @@ html
     script
       == javascript
   body
-    div.fixed-stats data-item=::CardGame.master_observer.dom_id
+    == master_observer.rendered_content
     div#games
       - games.each_with_index do |game,index|
         - "<hr>" if index>0
