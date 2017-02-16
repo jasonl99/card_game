@@ -1,6 +1,8 @@
-div.connected-event
-  span.direction =event.direction
-  span.user      =event_user
-  span.sender    =event.sender.class.to_s.split("::").last
-  span.dom_item  =event.dom_item
-  span.action    =event.message 
+div.observed-events
+  div.connected-event.header
+    span.header.direction In/Out
+    span.header.user User 
+    span.header.sender WebObject
+    span.header.dom_item DOM Target
+    span.header.action Action
+div.observed-events data-item=dom_id(%{items})

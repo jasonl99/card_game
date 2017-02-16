@@ -6,7 +6,8 @@ html
     script
       == javascript
   body
+    == master_observer.to_html
     div#games
       - games.each_with_index do |game,index|
         - "<hr>" if index>0
-        == game.content
+        == game.to_html

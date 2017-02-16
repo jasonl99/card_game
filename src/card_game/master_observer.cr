@@ -1,4 +1,3 @@
-
 module CardGame
   # This class monitors all games by observing events at the CardGame level
   # so all events across all card games come in.
@@ -7,6 +6,7 @@ module CardGame
     @game_stats = Hash(String, String | Int32 ).new
 
     def after_initialize
+      add_element_class "fixed-stats"
       CardGame.add_observer(self)
     end
 
@@ -19,6 +19,7 @@ module CardGame
       empty_games = 0
       @game_stats["Games"] = CardGame.instances.size
       CardGame.instances.each do |(instance_name, instance_int)|
+        puts "#{instance_int} #{instance_int.class}"
         if (game = CardGame::INSTANCES[instance_int])
           empty_games += 1 if game.subscribers.size == 0
           total_subs += game.subscribers.size
