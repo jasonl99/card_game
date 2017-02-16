@@ -9,6 +9,7 @@ dependencies:
     github: askn/faker
   lattice-core:
     github: jasonl99/lattice-core
+    branch: cleaner_dom
     #path: /home/jason/crystal/lattice-core
 
   sqlite3:
