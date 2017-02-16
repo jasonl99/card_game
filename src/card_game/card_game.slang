@@ -2,7 +2,7 @@ div#hand
   - hand.each_with_index do |card,idx|
     span.card-holder
       img.card src=card_image(card) data-item="#{dom_id}-card-#{idx}" data-event-attributes="src" data-events="click"
-div#chat-room data-item=chat_room.dom_id
+== chat_room.rendered_content
 div#stats
   span.game-name = "game: #{name}"
   span.cards-remaining

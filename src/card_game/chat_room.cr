@@ -1,12 +1,19 @@
 require "./chat_message"
 module CardGame
-  class ChatRoom < Lattice::Connected::StaticBuffer
+  class ChatRoom < Lattice::Connected::ObjectList
 
     # Each chaat message rolls off the display (we don't keep all of them around)
     # for this demo, we only keep the last five message.
     @max_items = 5
 
+    def after_initialize
+      @items_dom_id = dom_id("items")
+      add_element_class "chat-room"
+      puts open_tag.colorize(:blue).on(:white)
+    end
+
     def send_chat(chat_message : ChatMessage)
+      puts "Subscribers #{@subscribers.size} Add #{chat_message.content}"
       add_content new_content: chat_message.content
     end
 
@@ -25,6 +32,10 @@ module CardGame
     # checking the dom-item since we only have one input form).  
     # this is where censoring could occurr (message = params["new-mesg"]...)
     def on_event(event, sender)
+      session_id = event.session_id
+      puts session_id
+      puts "session_id #{session_id}"
+      puts "Received an #{event.event_type} #{event.direction} on session #{session_id} chat message #{event.message}"
       if event.direction == "In" && event.session_id && (player_name = session_string(session_id: event.session_id.as(String), value_of: "name"))
         message = event.message.as(Hash(String,JSON::Type))
         action = message["action"]
