@@ -24,11 +24,9 @@ module CardGame
     end
 
     def after_initialize
-      @element_type = "DIV"
       (1..5).each {|c| hand << draw_card}
       add_observer game_observer
       chat_room.add_observer game_observer
-      @element_options["type"] = "div"
     end
 
     def card_image(card)

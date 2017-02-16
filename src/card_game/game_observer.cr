@@ -8,7 +8,12 @@ module CardGame
     #   render "./src/card_game/game_observer.slang"
     # end
     def after_initialize
+      @items_dom_id = dom_id("items")
       add_element_class "observed-events"
+    end
+
+    def content
+      render "./src/card_game/game_observer.slang"
     end
 
     def on_event( event, speaker )
