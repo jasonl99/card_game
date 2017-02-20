@@ -50,14 +50,20 @@ module CardGame
   end
 
   get "/cardgame/:game" do |context|
-    Player.new(context.session.id)
-    if (user_name = context.params.query["player_name"]?)
-      context.session.string("name",user_name)
-    end
-    unless (user_name = context.session.string?("name"))
+    if context.session.id && (player = Player.find?(context.session.id) )
+      user_name = player.name
+    else
+      player = Player.new(context.session.id)
       user_name = Faker::Name.first_name
-      context.session.string("name",user_name)
+      player.name = user_name
     end
+      
+    # if (user_name = context.params.query["player_name"]?)
+    #   context.session.string("name",user_name)
+    # end
+    # unless (user_name = context.session.string?("name"))
+    #   context.session.string("name",user_name)
+    # end
     game_name = context.params.url["game"]
     begin
       javascript, card_game = CardGame.preload(name: game_name, session_id: context.session.id, create: true)

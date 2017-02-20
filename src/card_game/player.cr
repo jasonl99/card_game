@@ -1,5 +1,5 @@
 class Player < Lattice::User
-  @name = "Visitor"
+  @name : String?
 
   def timeout 
     puts "Player #{name} has left the table."
@@ -9,8 +9,12 @@ class Player < Lattice::User
     @name = @session.as(Session).string?("name") || "Visitor" if @session
   end
 
-  def name
-    session_string("name","Visitor").as(String)
+  def name=(@name)
+    @session.as(Session).string("name",@name.as(String)) if @session && @name
+  end
+  def name 
+    @name ||= session_string("name","Visitor").as(String)
+    @name.as(String)
   end
 
   # TODO macros for each type
