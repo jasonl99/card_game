@@ -36,13 +36,12 @@ module CardGame
     def on_event(event, sender)
       component_id = component_id(event.dom_item)
       card_index = component_index(component_id)
-      player = Player.find_or_create(event.session_id)
-#      begin
+      if event.session_id
+        player = Player.find_or_create(event.session_id.as(String))
         player_name = player.name
-        # player_name = Session.get(event.session_id.as(String)).as(Session).string("name")  # we assume that this has been validated and a session exists and name is set
-      # rescue
-      #   player_name = "Anon"
-#      end
+      else
+        player_name = "Visitor"
+      end
       if event.message
         message = event.message.as(Hash(String,JSON::Type))
         action = message["action"]
