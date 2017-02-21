@@ -14,7 +14,7 @@ shards:
 
   kemal:
     github: kemalcr/kemal
-    version: 0.18.0
+    commit: 14de5c79fb4b2119ace055990dc26be7a672bfbd
 
   kemal-session:
     path: /home/jason/crystal/kemal-session
@@ -27,10 +27,6 @@ shards:
   lattice-core:
     path: /home/jason/crystal/lattice-core
     version: 0.12.0
-
-  multipart:
-    github: RX14/multipart.cr
-    version: 0.1.2
 
   radix:
     github: luislavena/radix

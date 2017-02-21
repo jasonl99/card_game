@@ -20,7 +20,7 @@ module CardGame
       @game_stats["Games"] = CardGame.instances.size
       CardGame.instances.each do |(instance_name, instance_int)|
         puts "#{instance_int} #{instance_int.class}"
-        if (game = CardGame::INSTANCES[instance_int])
+        if (game = CardGame::INSTANCES[instance_int]?)
           empty_games += 1 if game.subscribers.size == 0
           total_subs += game.subscribers.size
         end
@@ -29,6 +29,8 @@ module CardGame
       @game_stats["Empty Games"] = empty_games
       @game_stats["Total Subs"] = total_subs
       @game_stats["Total Events"] = @game_stats.fetch("Total Events",0).as(Int32) + 1
+      @game_stats["Users"] = Lattice::User::ACTIVE_USERS.size
+
     end
 
     def content
