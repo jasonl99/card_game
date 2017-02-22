@@ -1,4 +1,4 @@
-cardgame
+card_game
 *.db
 *.log
 /doc/

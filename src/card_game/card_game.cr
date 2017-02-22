@@ -36,10 +36,12 @@ module CardGame
     def on_event(event, sender)
       component_id = component_id(event.dom_item)
       card_index = component_index(component_id)
-      begin
-        player_name = Session.get(event.session_id.as(String)).as(Session).string("name")  # we assume that this has been validated and a session exists and name is set
-      rescue
-        player_name = "Anon"
+      puts "Cardgame event received: #{event.message}"
+      if (player = event.user)
+        puts "Player: #{player}".colorize(:white).on(:blue)
+        player_name = player.as(Player).name
+      else
+        player_name = "Visitor"
       end
       if event.message
         message = event.message.as(Hash(String,JSON::Type))

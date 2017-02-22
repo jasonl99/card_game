@@ -30,8 +30,9 @@ module CardGame
     # checking the dom-item since we only have one input form).  
     # this is where censoring could occurr (message = params["new-mesg"]...)
     def on_event(event, sender)
-      session_id = event.session_id
-      if event.direction == "In" && event.session_id && (player_name = session_string(session_id: event.session_id.as(String), value_of: "name"))
+      # if event.direction == "In" && event.session_id && (player_name = session_string(session_id: event.session_id.as(String), value_of: "name"))
+      if event.direction == "In" && (player = event.user )
+        player_name = player.as(Player).name
         message = event.message.as(Hash(String,JSON::Type))
         action = message["action"]
         if action == "submit" && player_name

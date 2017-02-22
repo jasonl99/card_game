@@ -17,8 +17,10 @@ module CardGame
     end
 
     def on_event( event, speaker )
-      if event.session_id && (session = Session.get event.session_id.as(String))
-         event_user = session.string?("name") || ""
+      if (player = event.user) && event.direction = "In" 
+        event_user = player.as(Player).name
+      else
+        event_user = "[Server]"
       end
       add_content render "./src/card_game/observed_event.slang"
     end

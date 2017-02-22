@@ -1,15 +1,61 @@
-abstract class Parent
-  property home = "United States"
+require "digest/sha1"
+
+class Digest::SHA1 < Digest::Base
+  def initialize
+    super
+    @message_block = StaticArray(UInt8, 64).new(0_u8)
+    puts "#{@message_block}"
+  end
 end
-
-abstract class Child < Parent
-end
-
-class GrandChild < Child
-	def initialize
-    @home = "Boston"
-	end
-end
-
-g = GrandChild.new
-
+puts Digest::SHA1.digest("Foo Bar")
+puts Digest::SHA1.digest("Foo Bar")
+puts Digest::SHA1.digest("Foo Bar")
+puts Digest::SHA1.digest("Foo Bar")
+puts Digest::SHA1.digest("Foo Bar")
+puts Digest::SHA1.digest("Foo Bar")
+puts Digest::SHA1.digest("Foo Bar")
+puts Digest::SHA1.digest("Foo Bar")
+puts Digest::SHA1.digest("Foo Bar")
+puts Digest::SHA1.digest("Foo Bar")
+puts Digest::SHA1.digest("Foo Bar")
+puts Digest::SHA1.digest("Foo Bar")
+puts Digest::SHA1.digest("Foo Bar")
+puts Digest::SHA1.digest("Foo Bar")
+puts Digest::SHA1.digest("Foo Bar")
+puts Digest::SHA1.digest("Foo Bar")
+puts Digest::SHA1.digest("Foo Bar")
+puts Digest::SHA1.digest("Foo Bar")
+puts Digest::SHA1.digest("Foo Bar")
+puts Digest::SHA1.digest("Foo Bar")
+puts Digest::SHA1.digest("Foo Bar")
+puts Digest::SHA1.digest("Foo Bar")
+puts Digest::SHA1.digest("Foo Bar")
+puts Digest::SHA1.digest("Foo Bar")
+puts Digest::SHA1.digest("Foo Bar")
+puts Digest::SHA1.digest("Foo Bar")
+puts Digest::SHA1.digest("Foo Bar")
+puts Digest::SHA1.digest("Foo Bar")
+puts Digest::SHA1.digest("Foo Bar")
+puts Digest::SHA1.digest("Foo Bar")
+# puts Digest::SHA1.hexdigest("Foo Bar")
+# puts Digest::SHA1.hexdigest("Foo Bar")
+# puts Digest::SHA1.hexdigest("Foo Bar")
+# puts Digest::SHA1.hexdigest("Foo Bar")
+# puts Digest::SHA1.hexdigest("Foo Bar")
+# puts Digest::SHA1.hexdigest("Foo Bar")
+# puts Digest::SHA1.hexdigest("Foo Bar")
+# puts Digest::SHA1.hexdigest("Foo Bar")
+# puts Digest::SHA1.hexdigest("Foo Bar")
+# puts Digest::SHA1.hexdigest("Foo Bar")
+# puts Digest::SHA1.hexdigest("Foo Bar")
+# puts Digest::SHA1.hexdigest("Foo Bar")
+# puts Digest::SHA1.hexdigest("Foo Bar")
+# puts Digest::SHA1.hexdigest("Foo Bar")
+# puts Digest::SHA1.hexdigest("Foo Bar")
+# puts Digest::SHA1.hexdigest("Foo Bar")
+# puts Digest::SHA1.hexdigest("Foo Bar")
+# puts Digest::SHA1.hexdigest("Foo Bar")
+# puts Digest::SHA1.hexdigest("Foo Bar")
+# puts Digest::SHA1.hexdigest("Foo Bar")
+# puts Digest::SHA1.hexdigest("Foo Bar")
+# puts Digest::SHA1.hexdigest("Foo Bar")
