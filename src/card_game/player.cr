@@ -1,4 +1,4 @@
-class Player < Lattice::User
+class Player < Lattice::BasicUser
   @name : String?
 
   def timeout 

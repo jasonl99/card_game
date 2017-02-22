@@ -37,9 +37,8 @@ module CardGame
     end
   end
 
-  # get "/admin/initialize_storage" do |context|
-  #   Storage.create
-  # end
+  Lattice::Core::Application.route_socket(user_class: Player)
+
 
   get "/stats" do |context|
     javascript, global_stats = GlobalStats.preload(name: "global_stats", session_id: context.session.id, create: true)

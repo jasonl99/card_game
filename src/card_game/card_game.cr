@@ -36,9 +36,10 @@ module CardGame
     def on_event(event, sender)
       component_id = component_id(event.dom_item)
       card_index = component_index(component_id)
-      if event.session_id
-        player = Player.find_or_create(event.session_id.as(String))
-        player_name = player.name
+      puts "Cardgame event received: #{event.message}"
+      if (player = event.user)
+        puts "Player: #{player}".colorize(:white).on(:blue)
+        player_name = player.as(Player).name
       else
         player_name = "Visitor"
       end
@@ -46,7 +47,6 @@ module CardGame
         message = event.message.as(Hash(String,JSON::Type))
         action = message["action"]
         if card_index && event.event_type == "subscriber" && action=="click" 
-          puts "#{action} from session #{event.session_id}"
           hand[card_index] = draw_card
           update_component "cards-remaining", deck.size
           update_attribute({"id"=>dom_id(component_id), "attribute"=>"src", "value"=>card_image hand[card_index]})
