@@ -5,13 +5,18 @@ class Player < Lattice::BasicUser
     puts "Player #{name} has left the table."
   end
 
+  def default_name
+    Faker::Name.first_name
+  end
+
   def load
-    @name = @session.as(Session).string?("name") || "Visitor" if @session
+    @name = @session.as(Session).string?("name") || default_name
   end
 
   def name=(@name)
     @session.as(Session).string("name",@name.as(String)) if @session && @name
   end
+
   def name 
     @name ||= session_string("name","Visitor").as(String)
     @name.as(String)
