@@ -56,13 +56,20 @@ module CardGame
 
     end
 
-    def subscribed( session_id, socket)
-      chat_room.subscribe(socket, session_id)  ##
-      game_observer.subscribe(socket, session_id)
-      # if (session = Session.get session_id) && (player_name = session.string?("name") )
-      #   Storage.connection.exec "insert into player_game (player, game) values (?,?)", player_name, name
-      # end
+    def subscribed( player : Player )
+      if ( player_name = player.name ) && (socket = player.socket)
+        personalize = {"id"=>"#{dom_id}-chatname", "attribute"=>"value", "value"=>player_name}
+        update_attribute(personalize, [socket])
+      end
     end
+
+    # def subscribed( session_id, socket)
+    #   chat_room.subscribe(socket, session_id)  ##
+    #   game_observer.subscribe(socket, session_id)
+    #   # if (session = Session.get session_id) && (player_name = session.string?("name") )
+    #   #   Storage.connection.exec "insert into player_game (player, game) values (?,?)", player_name, name
+    #   # end
+    # end
 
     def draw_card
       self.deck = new_deck if self.deck.size == 0
