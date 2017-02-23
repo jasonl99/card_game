@@ -10,7 +10,20 @@ class Player < Lattice::BasicUser
   end
 
   def load
-    @name = @session.as(Session).string?("name") || default_name
+    if @session
+      @name = @session.as(Session).string?("name")
+    end
+    unless @name
+      @name = default_name
+      save
+    end
+
+  end
+
+  def save
+    if (session = @session )
+      session.string("name",@name.as(String)) if @name
+    end
   end
 
   def name=(@name)
@@ -24,8 +37,9 @@ class Player < Lattice::BasicUser
 
   # TODO macros for each type
   def session_string( key : String, default ) : String
-    if @session
-      @session.as(Session).string?(key).as(String)
+    if (session = @session) && (key = session.as(Session).string?(key))
+      key.as(String)
+      # @session.as(Session).string?(key).as(String)
     else
       default
     end

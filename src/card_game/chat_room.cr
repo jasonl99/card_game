@@ -15,16 +15,24 @@ module CardGame
       add_content new_content: chat_message.content
     end
 
-    # when a new user is subscribed, the chat input box is personalized with their name
-    # All users get the same initial page, but each is individuall customized
-    # over the socket.
-    def subscribed(session_id : String, socket : HTTP::WebSocket)
-      if (user_name = session_string(session_id: session_id, value_of: "name"))
-        personalize = {"id"=>"#{dom_id}-chatname", "attribute"=>"value", "value"=>user_name}
+    def subscribed( player : Player )
+      if ( player_name = player.name ) && (socket = player.socket)
+        personalize = {"id"=>"#{dom_id}-chatname", "attribute"=>"value", "value"=>player_name}
         update_attribute(personalize, [socket])
       end
       super
     end
+
+    # when a new user is subscribed, the chat input box is personalized with their name
+    # All users get the same initial page, but each is individuall customized
+    # over the socket.
+    # def subscribed(session_id : String, socket : HTTP::WebSocket)
+    #   if (user_name = session_string(session_id: session_id, value_of: "name"))
+    #     personalize = {"id"=>"#{dom_id}-chatname", "attribute"=>"value", "value"=>user_name}
+    #     update_attribute(personalize, [socket])
+    #   end
+    #   super
+    # end
 
     # the only event we really do anything with is an action submit (we don't even bother
     # checking the dom-item since we only have one input form).  

@@ -10,15 +10,15 @@ shards:
 
   faker:
     github: askn/faker
-    version: 0.2.0
+    version: 0.3.0
 
   kemal:
     github: kemalcr/kemal
-    commit: 14de5c79fb4b2119ace055990dc26be7a672bfbd
+    commit: e3aea753b56316fda283031ae63f6f1fec0bf067
 
   kemal-session:
-    path: /home/jason/crystal/kemal-session
-    version: 0.7.0
+    github: jasonl99/kemal-session
+    commit: 0b8f0cc9884871e60b8704b2bbe827d6b86ce53c
 
   kilt:
     github: jeromegn/kilt
