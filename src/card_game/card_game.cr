@@ -16,11 +16,11 @@ module CardGame
     end
 
     def chat_room : ChatRoom
-      @chat_room ||= ChatRoom.new("ChatRoom-#{dom_id}")
+      @chat_room ||= ChatRoom.new("ChatRoom-#{dom_id}", self)
     end
 
     def game_observer : GameObserver
-      @game_observer ||= GameObserver.new("GameObserver-#{dom_id}")
+      @game_observer ||= GameObserver.new("GameObserver-#{dom_id}", self)
     end
 
     def after_initialize
@@ -33,25 +33,13 @@ module CardGame
       "/images/#{card.gsub(" ","_").downcase}.png"
     end
 
-    def on_event(event, sender)
-      component_id = component_id(event.dom_item)
-      card_index = component_index(component_id)
-      puts "Cardgame event received: #{event.message}"
-      if (player = event.user)
-        puts "Player: #{player}".colorize(:white).on(:blue)
-        player_name = player.as(Player).name
-      else
-        player_name = "Visitor"
-      end
-      if event.message
-        message = event.message.as(Hash(String,JSON::Type))
-        action = message["action"]
-        if card_index && event.event_type == "subscriber" && action=="click" 
-          hand[card_index] = draw_card
-          update_component "cards-remaining", deck.size
-          update_attribute({"id"=>dom_id(component_id), "attribute"=>"src", "value"=>card_image hand[card_index]})
-          chat_room.send_chat ChatMessage.new name: player_name, message: hand[card_index]
-        end
+    def on_event( event : Lattice::Connected::IncomingEvent)
+      if event.action == "click" && (card_index = event.index)
+        player_name = event.user.as(Player).name || "Visitor"
+        hand[card_index] = draw_card
+        update_component "cards-remaining", deck.size
+        update_attribute({"id"=>dom_id("card-#{card_index}"), "attribute"=>"src", "value"=>card_image hand[card_index]})
+        chat_room.send_chat ChatMessage.new name: player_name, message: hand[card_index]
       end
 
     end
@@ -62,14 +50,6 @@ module CardGame
         update_attribute(personalize, [socket])
       end
     end
-
-    # def subscribed( session_id, socket)
-    #   chat_room.subscribe(socket, session_id)  ##
-    #   game_observer.subscribe(socket, session_id)
-    #   # if (session = Session.get session_id) && (player_name = session.string?("name") )
-    #   #   Storage.connection.exec "insert into player_game (player, game) values (?,?)", player_name, name
-    #   # end
-    # end
 
     def draw_card
       self.deck = new_deck if self.deck.size == 0

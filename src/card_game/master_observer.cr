@@ -8,6 +8,7 @@ module CardGame
     def after_initialize
       add_element_class "fixed-stats"
       CardGame.add_observer(self)
+      ChatRoom.add_observer(self)
     end
 
     def game_stats
@@ -19,7 +20,6 @@ module CardGame
       empty_games = 0
       @game_stats["Games"] = CardGame.instances.size
       CardGame.instances.each do |(instance_name, instance_int)|
-        puts "#{instance_int} #{instance_int.class}"
         if (game = CardGame::INSTANCES[instance_int]?)
           empty_games += 1 if game.subscribers.size == 0
           total_subs += game.subscribers.size
@@ -38,6 +38,9 @@ module CardGame
       render "src/card_game/master_observer.slang"
     end
 
+    def observe_event( event, target )
+      puts "Master Observer just heard from #{target.to_s} #{event.component} #{event.params}"
+    end
     def on_event(event, sender)
       load_stats
       @game_stats.each do |(k,v)|
