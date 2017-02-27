@@ -11,14 +11,28 @@ module CardGame
       render "./src/card_game/game_observer.slang"
     end
 
-    def observe_event( event : Lattice::Connected::IncomingEvent, target)
-      user = event.user.as(Player).name
-      action = event.action
-      sender = "#{target.to_s} #{event.component}"
-      direction = "In"
-      dom_item = event.dom_item
-      message = event.params
-      add_content render "./src/card_game/observed_event.slang"
+    def observe_event( event,  target)
+      case event.class
+      when Lattice::Connected::IncomingEvent
+        event = event.as(Lattice::Connected::IncomingEvent)
+        user = event.user.as(Player).name
+        action = event.action
+        sender = "#{target.to_s} #{event.component}"
+        direction = "In"
+        dom_item = event.dom_item
+        message = event.params
+        add_content render "./src/card_game/observed_event.slang"
+      when Lattice::Connected::OutgoingEvent
+        event = event.as(Lattice::Connected::OutgoingEvent)
+        user = "[Server]"
+        action = "Send"
+        sender = "#{event.source.to_s}"
+        direction = "Out"
+        dom_item = ""
+        message = event.message
+        add_content render "./src/card_game/observed_event.slang"
+
+      end
     end
 
   end

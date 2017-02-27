@@ -38,9 +38,6 @@ module CardGame
       render "src/card_game/master_observer.slang"
     end
 
-    def observe_event( event, target )
-      puts "Master Observer just heard from #{target.to_s} #{event.component} #{event.params}"
-    end
     def on_event(event, sender)
       load_stats
       @game_stats.each do |(k,v)|

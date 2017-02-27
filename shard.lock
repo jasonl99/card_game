@@ -34,7 +34,7 @@ shards:
 
   slang:
     github: jeromegn/slang
-    commit: 6f8c5b226758faf73575d02b67a8010f8e10a0ab
+    commit: 17ee48438f9798ac0d47520c47c17bcd7e06cd93
 
   sqlite3:
     github: crystal-lang/crystal-sqlite3
