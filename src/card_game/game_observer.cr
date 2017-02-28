@@ -5,6 +5,7 @@ module CardGame
 
     def after_initialize
       add_element_class "observed-events"
+      @items_dom_id = dom_id("items")
     end
 
     def content
@@ -12,8 +13,9 @@ module CardGame
     end
 
     def observe_event( event,  target)
-      case event.class
-      when Lattice::Connected::IncomingEvent
+      puts "GameObserver saw #{event}"
+      case 
+      when event.is_a? Lattice::Connected::IncomingEvent
         event = event.as(Lattice::Connected::IncomingEvent)
         user = event.user.as(Player).name
         action = event.action
@@ -22,7 +24,7 @@ module CardGame
         dom_item = event.dom_item
         message = event.params
         add_content render "./src/card_game/observed_event.slang"
-      when Lattice::Connected::OutgoingEvent
+      when event.is_a? Lattice::Connected::OutgoingEvent
         event = event.as(Lattice::Connected::OutgoingEvent)
         user = "[Server]"
         action = "Send"

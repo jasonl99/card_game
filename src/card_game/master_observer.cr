@@ -38,7 +38,8 @@ module CardGame
       render "src/card_game/master_observer.slang"
     end
 
-    def on_event(event, sender)
+    # we don't care what event, just show thew aggregate stats.
+    def observe_event(event, target)
       load_stats
       @game_stats.each do |(k,v)|
         update_component k.gsub(" ","-").downcase, v

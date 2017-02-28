@@ -9,10 +9,10 @@ require "./card_game/*"
 
 puts "kemal-session config"
 Session.config do |config|
-  config.timeout = 30.seconds
+  config.timeout = 1.hour
   config.cookie_name = "session_id"
   config.secret = "some_secret"
-  config.gc_interval = 15.seconds
+  config.gc_interval = 30.minutes
 end
 puts "kemal-session config finished"
 

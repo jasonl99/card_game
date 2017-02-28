@@ -30,7 +30,8 @@ module CardGame
 
   end
 
-  class GlobalStats < Lattice::Connected::DynamicBuffer
+  #class GlobalStats < Lattice::Connected::DynamicBuffer
+  class GlobalStats < Lattice::Connected::ObjectList
 
     def update_users
       update_stats
