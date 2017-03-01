@@ -30,7 +30,6 @@ module CardGame
       @game_stats["Total Subs"] = total_subs
       @game_stats["Total Events"] = @game_stats.fetch("Total Events",0).as(Int32) + 1
       @game_stats["Users"] = Lattice::User::ACTIVE_USERS.size
-
     end
 
     def content

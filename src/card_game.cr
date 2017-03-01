@@ -37,6 +37,7 @@ module CardGame
     player = Player.find_or_create(context.session.id)
     user_name = player.name
     game_name = context.params.url["game"]
+    @@master_observer.refresh
     begin
       card_game = CardGame.find_or_create(game_name).as(CardGame)
       games = [card_game].compact
