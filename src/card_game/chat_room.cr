@@ -23,33 +23,12 @@ module CardGame
       super
     end
 
-    # when a new user is subscribed, the chat input box is personalized with their name
-    # All users get the same initial page, but each is individuall customized
-    # over the socket.
-    # def subscribed(session_id : String, socket : HTTP::WebSocket)
-    #   if (user_name = session_string(session_id: session_id, value_of: "name"))
-    #     personalize = {"id"=>"#{dom_id}-chatname", "attribute"=>"value", "value"=>user_name}
-    #     update_attribute(personalize, [socket])
-    #   end
-    #   super
-    # end
-
-    # the only event we really do anything with is an action submit (we don't even bother
-    # checking the dom-item since we only have one input form).  
-    # this is where censoring could occurr (message = params["new-mesg"]...)
-    def on_event(event, sender)
-      # if event.direction == "In" && event.session_id && (player_name = session_string(session_id: event.session_id.as(String), value_of: "name"))
-      if event.direction == "In" && (player = event.user )
-        player_name = player.as(Player).name
-        message = event.message.as(Hash(String,JSON::Type))
-        action = message["action"]
-        if action == "submit" && player_name
-          params = message["params"].as(Hash(String,JSON::Type))
-          message = params["new-msg"].as(String)
-          # censor a few words
-          %w(fuck shit cunt).each {|w| message = message.gsub(w,"*"*w.size)}
-          send_chat ChatMessage.new name: player_name, message: message if message.size > 0
-        end
+    def on_event( event : Lattice::Connected::IncomingEvent )
+      player_name = event.user.as(Player).name || "Visitor"
+      if event.action == "submit"
+        message = event.params["new-msg"].as(String)
+        %w(fuck shit cunt).each {|w| message = message.gsub(w,"*"*w.size)}
+        send_chat ChatMessage.new name: player_name, message: message if message.size > 0
       end
     end
 
